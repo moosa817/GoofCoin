@@ -1,3 +1,10 @@
 from django.shortcuts import render
 
-# Create your views here.
+# import ensurce_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+
+# loading react build
+@ensure_csrf_cookie
+def home(request):
+    return render(request, "index.html")
