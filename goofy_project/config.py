@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     API_VERSION: str = "1.0.0"
 
     SECRET_KEY: str
-    DEBUG: bool = True
+    DEBUG: bool
     DATABASE_URL: str
     ALLOWED_HOSTS: list = ["*.vercel.app", "localhost", "127.0.0.1"]
 
