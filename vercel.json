@@ -1,23 +1,14 @@
 {
-    "version": 2,
     "builds": [
         {
-            "src": "server.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "goofy_project/*",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "goofy_project/manage.py",
+            "src": "goofy_project/goofy_project/wsgi.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "server.py"
+            "dest": "goofy_project/goofy_project/wsgi.py"
         }
     ]
 }
