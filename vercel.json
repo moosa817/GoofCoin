@@ -7,7 +7,7 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
+            "src": "/goofy_project/(.*)",
             "dest": "goofy_project/goofy_project/wsgi.py"
         }
     ]
