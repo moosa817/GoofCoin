@@ -11,7 +11,12 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     DEBUG: bool
     DATABASE_URL: str
-    ALLOWED_HOSTS: list = ["*.vercel.app", "localhost", "127.0.0.1"]
+    ALLOWED_HOSTS: list = [
+        "*.vercel.app",
+        "localhost",
+        "127.0.0.1",
+        "goofcoin.vercel.app",
+    ]
 
     class Config:
         env_file = ".env"
