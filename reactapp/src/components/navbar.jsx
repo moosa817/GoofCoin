@@ -21,20 +21,21 @@ const Navbar = () => {
                     </svg>
                 </button>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 ">
-                        <li>
-                            <Link to="/" className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold" aria-current="page">Dashboard</Link>
+                    <ul className="font-bold sm:font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 ">
+                        <li className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold" aria-current="page">
+                            <Link to="/" >Dashboard</Link>
                         </li>
 
-                        <li>
-                            <Link to="/blockchain" className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold" aria-current="page">Blockchain</Link>
+                        <li className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold">
+                            <Link to="/blockchain" aria-current="page">Blockchain</Link>
                         </li>
-                        <li>
-                            <a href="#" className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold" aria-current="page">My Transaction</a>
+                        <li className="w-full block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold" >
+                            <a href="#" aria-current="page">My Transaction</a>
                         </li>
 
-                        <li>
-                            <button onClick={openModal} className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold hover:cursor-pointer" aria-current="page"> <LoginIcon />&nbsp;Login/Signup</button>
+                        <li onClick={openModal} className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold hover:cursor-pointer">
+
+                            <button className="flex" aria-current="page"> <LoginIcon />&nbsp;Login/Signup</button>
                         </li>
 
                     </ul>
