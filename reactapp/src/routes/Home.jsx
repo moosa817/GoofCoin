@@ -1,11 +1,11 @@
-import Navbar from "../components/navbar"
+import MyNav from "../components/navbar"
 import Header from "../components/header"
 import LoginModal from "../components/LoginModal"
 
 const Home = () => {
     return (
         <>
-            <Navbar />
+            <MyNav />
             <Header />
             <LoginModal />
         </>)

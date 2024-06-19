@@ -1,48 +1,25 @@
-import LoginIcon from '@mui/icons-material/Login';
-import { useContext } from 'react';
+import LoginIcon from "@mui/icons-material/Login";
+import { Button, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
+import { Link } from "react-router-dom";
 import { ModalContext } from './LoginPageContext';
-import Logo from '../assets/imgs/header-logo.png';
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 
-const Navbar = () => {
+
+export default function MyNav() {
     const { openModal } = useContext(ModalContext);
 
     return (
-        <nav className="bg-background">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src={Logo} className="h-16" alt=" Logo" />
-
-                </a>
-                <button data-collapse-toggle="navbar-default" type="button" className="inline-flex items-center p-2 w-10 h-10 hover:scale-110 duration-150 justify-center text-sm text-gray-300 rounded-lg md:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
-                    <span className="sr-only">Open main menu</span>
-                    <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
-                    </svg>
-                </button>
-                <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul className="font-bold sm:font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 ">
-                        <li className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold" aria-current="page">
-                            <Link to="/" >Dashboard</Link>
-                        </li>
-
-                        <li className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold">
-                            <Link to="/blockchain" aria-current="page">Blockchain</Link>
-                        </li>
-                        <li className="w-full block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold" >
-                            <a href="#" aria-current="page">My Transaction</a>
-                        </li>
-
-                        <li onClick={openModal} className="block py-2 px-3 md:p-0 md:border-b-0 border-b-2 hover:text-accent hover:scale-105 duration-300 hover:font-semibold hover:cursor-pointer">
-
-                            <button className="flex" aria-current="page"> <LoginIcon />&nbsp;Login/Signup</button>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <Navbar fluid rounded className="bg-background">
+            <NavbarBrand href="/">
+                <img src="/src/assets/imgs/header-logo.png" className="mr-3 h-14 sm:h-16" alt="Logo" />
+            </NavbarBrand>
+            <NavbarToggle className="text-white hover:scale-125 duration-500 hover:bg-transparent border-none" />
+            <NavbarCollapse >
+                <Link to="/" className="text-base hover:scale-105 scale-105 sm:scale-100  sm:hover:text-accent hover:font-semibold duration-500 border-b-2 p-3 sm:border-b-0 sm:hover:bg-inherit hover:bg-accent hover:text-white">Dashboard</Link>
+                <Link to="/" className="text-base hover:scale-105 scale-105 sm:scale-100  sm:hover:text-accent hover:font-semibold duration-500 border-b-2 p-3 sm:border-b-0 sm:hover:bg-inherit hover:bg-accent hover:text-white">Dashboard</Link>
+                <Link to="/" className="text-base hover:scale-105 scale-105 sm:scale-100  sm:hover:text-accent hover:font-semibold duration-500 border-b-2 sm:border-b-0 p-3 sm:hover:bg-inherit hover:bg-accent hover:text-white">Dashboard</Link>
+                <button onClick={openModal} className="text-base hover:scale-105 scale-105 sm:scale-100  sm:hover:text-accent font-semibold sm:border-b-0 duration-500 border-b-2 p-2 sm:hover:bg-inherit hover:bg-accent  "><LoginIcon />Login/Signup</button>
+            </NavbarCollapse>
+        </Navbar>
     );
-};
-
-export default Navbar;
+}
