@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "goofy_app",
+    "corsheaders",
     "drf_spectacular",
     "whitenoise.runserver_nostatic",
     "rest_framework_simplejwt",
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -82,6 +84,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "goofy_project.wsgi.application"
 
+# custom user model
+AUTH_USER_MODEL = "goofy_app.User"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -154,3 +158,8 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": config.API_DESCRIPTION,
     "VERSION": config.API_VERSION,
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+]
