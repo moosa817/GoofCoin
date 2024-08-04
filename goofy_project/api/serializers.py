@@ -39,8 +39,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             raise serializers.ValidationError("No user found with this email/username.")
 
         credentials = {"username": username, "password": password}
-
-        if user is None:
+        if username is None:
             raise serializers.ValidationError("Invalid email/username or password.")
 
         return super().validate(credentials)
