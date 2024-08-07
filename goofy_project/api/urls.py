@@ -13,4 +13,5 @@ urlpatterns = [
         name="token_obtain_pair",
     ),
     path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("guest_user/", register_login.GuestView.as_view()),
 ]

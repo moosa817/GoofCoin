@@ -3,6 +3,8 @@
 from rest_framework import serializers
 from goofy_app.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.conf import settings
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -21,6 +23,13 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        refresh = RefreshToken.for_user(instance)
+        representation["refresh"] = str(refresh)
+        representation["access"] = str(refresh.access_token)
+        return representation
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):

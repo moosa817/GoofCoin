@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "whitenoise.runserver_nostatic",
     "rest_framework_simplejwt",
+    "guest_user",
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,11 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    # it should be the last entry to prevent unauthorized access
+    "guest_user.backends.GuestBackend",
+]
 
 
 # Internationalization
@@ -163,3 +169,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
 ]
+
+
+# GUEST_USER_NAME_GENERATOR = "guest_user.functions.generate_friendly_username"

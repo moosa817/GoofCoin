@@ -10,3 +10,4 @@ class User(AbstractUser):
     last_name = None
     name = models.CharField(max_length=255, blank=False, null=False)
     email = models.EmailField(unique=True, blank=False, null=False)
+    guest = models.BooleanField(default=False)

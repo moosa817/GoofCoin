@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     DEBUG: bool
     DATABASE_URL: str
+    GUEST_PWD: str
     ALLOWED_HOSTS: list = [
         "*.vercel.app",
         "localhost",
