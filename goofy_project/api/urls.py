@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import register_login
+from .views import register_login, home
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -14,4 +14,6 @@ urlpatterns = [
     ),
     path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("guest_user/", register_login.GuestView.as_view()),
+    path("setup/", home.UserSetup.as_view()),
+    path("make-transaction/", home.Transaction.as_view()),
 ]

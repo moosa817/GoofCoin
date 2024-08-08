@@ -14,9 +14,8 @@ from pathlib import Path
 from config import config
 from dotenv import load_dotenv
 import dj_database_url
+from datetime import timedelta
 
-
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,7 +49,6 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "whitenoise.runserver_nostatic",
     "rest_framework_simplejwt",
-    "guest_user",
 ]
 
 MIDDLEWARE = [
@@ -170,5 +168,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
 
-
-# GUEST_USER_NAME_GENERATOR = "guest_user.functions.generate_friendly_username"
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=365),
+}

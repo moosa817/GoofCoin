@@ -52,3 +52,9 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             raise serializers.ValidationError("Invalid email/username or password.")
 
         return super().validate(credentials)
+
+
+class TransactionSerializer(serializers.Serializer):
+    recipient = serializers.CharField()
+    amount = serializers.FloatField()
+    privateKeyFile = serializers.FileField()

@@ -12,6 +12,19 @@ class Settings(BaseSettings):
     DEBUG: bool
     DATABASE_URL: str
     GUEST_PWD: str
+
+    SYSTEM_PRIVATE_KEY: str
+
+    SYSTEM_PUBLIC_KEY: str = """-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz1r5Mzx949cbhHFJQX4L
+fGBmgbEny1MiVaYen+o3qmebdwwERt5VyAVgeqxk37+yvDA1XEiAC1D6EMwsoGQ/
+AW52NX2kOcjg9gE8r3CGjXqDIzHpiQQ/v+mPkRerL2E21b7+N3dZFyHKOuCpReCa
+8oowiUfwtplSOvmC+k3lCdnblLgFaw2HPUZN4X3KanRI0/A4C+ZWuMYqubcBKp1y
+mAwopJJtQH8032ZKRYdoiV7HJO11v+7lEFUrVzoeAeZ2hb9B8zBbVbuapnLbfk9L
+JcmNwGuiCLt/5gRsMRu/5SW2hSHYr8gLMjxAs8ek6gKXCgWuAlTZe23K6rXJhwTz
+lQIDAQAB
+-----END PUBLIC KEY-----
+"""
     ALLOWED_HOSTS: list = [
         "*.vercel.app",
         "localhost",

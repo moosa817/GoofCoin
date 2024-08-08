@@ -4,7 +4,6 @@ attrs==23.2.0
 dj-database-url==2.2.0
 Django==5.0.6
 django-cors-headers==4.4.0
-django-guest-user==0.5.5
 djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
 drf-spectacular==0.27.2
@@ -20,6 +19,7 @@ pydantic_core==2.18.4
 PyJWT==2.9.0
 python-dotenv==1.0.1
 PyYAML==6.0.1
+random-username==1.0.2
 referencing==0.35.1
 rpds-py==0.18.1
 sqlparse==0.5.0
