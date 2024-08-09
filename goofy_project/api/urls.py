@@ -16,4 +16,5 @@ urlpatterns = [
     path("guest_user/", register_login.GuestView.as_view()),
     path("setup/", home.UserSetup.as_view()),
     path("make-transaction/", home.Transaction.as_view()),
+    path("view-blockchain", home.ViewBlockchain.as_view()),
 ]

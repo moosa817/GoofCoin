@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
-from goofy_app.models import User
+from goofy_app.models import User, Block
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -8,8 +8,9 @@ from django.db.models import Q  # Import Q object
 from .crypto_utils import generate_rsa_keypair
 from .transactions import make_transaction
 from django.conf import settings
-from api.serializers import TransactionSerializer
+from api.serializers import TransactionSerializer, BlockChainSerializer
 from rest_framework.parsers import MultiPartParser, JSONParser
+from rest_framework import generics
 
 
 class UserSetup(APIView):
@@ -89,3 +90,8 @@ class Transaction(APIView):
                 return Response({"message": response, "error": True})
         else:
             return Response(serializer.errors, status=400)
+
+
+class ViewBlockchain(generics.ListAPIView):
+    serializer_class = BlockChainSerializer
+    queryset = Block.objects.all()

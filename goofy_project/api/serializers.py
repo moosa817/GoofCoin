@@ -1,7 +1,7 @@
 # serializers.py
 
 from rest_framework import serializers
-from goofy_app.models import User
+from goofy_app.models import User, Block
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.conf import settings
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
@@ -58,3 +58,9 @@ class TransactionSerializer(serializers.Serializer):
     recipient = serializers.CharField()
     amount = serializers.FloatField()
     privateKeyFile = serializers.FileField()
+
+
+class BlockChainSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Block
+        fields = "__all__"
