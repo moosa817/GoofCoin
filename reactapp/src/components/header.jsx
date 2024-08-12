@@ -1,7 +1,9 @@
-import Navbar from "./navbar";
 import Bg from '../assets/imgs/bg.svg'
-
+import { ModalContext } from './auth/LoginPageContext';
+import { useContext } from 'react';
 const Header = () => {
+
+    const { openModal } = useContext(ModalContext);
     return (
         <header className=" bg-background h-[100vh]">
 
@@ -19,8 +21,8 @@ const Header = () => {
                     </div>
 
                     <div className="flex justify-center">
-                        <button className="p-3 md:px-5 md:py-4 font-semibold sm:text-lg my-8 sm:mx-4 mx-4 shadow-2xl rounded-3xl bg-accent hover:scale-110 duration-700">Send Coin</button>
-                        <button className="p-2 sm:p-3 border-accent border md:px-5 md:py-4 font-semibold sm:text-lg my-8 mx-3 sm:mx-4 shadow-2xl rounded-3xl hover:scale-110 duration-700 hover:bg-primary">Join Now</button>
+                        <button onClick={openModal} className="p-3 md:px-5 md:py-4 font-semibold sm:text-lg my-8 sm:mx-4 mx-4 shadow-2xl rounded-3xl bg-accent hover:scale-110 duration-700">Send Coin</button>
+                        <button onClick={openModal} className="p-2 sm:p-3 border-accent border md:px-5 md:py-4 font-semibold sm:text-lg my-8 mx-3 sm:mx-4 shadow-2xl rounded-3xl hover:scale-110 duration-700 hover:bg-primary">Join Now</button>
                     </div>
                 </div>
             </div>

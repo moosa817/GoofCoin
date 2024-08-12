@@ -1,7 +1,7 @@
 import Navbar from "../components/navbar"
-import { LoginContext } from "../components/AuthContext"
+import { LoginContext } from "../components/auth/AuthContext"
 import { useContext } from "react"
-import { ModalContext } from "../components/LoginPageContext"
+import { ModalContext } from "../components/auth/LoginPageContext"
 import { useEffect } from "react"
 import { Navigate } from "react-router-dom"
 

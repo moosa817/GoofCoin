@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ReactDOM from 'react-dom/client'
 import Home from './routes/Home.jsx'
 import BlockChain from './routes/BlockChain.jsx'
 import Dashboard from './routes/Dashboard.jsx'
+import Logout from './routes/Logout.jsx'
 import './assets/css/output.css'
 import './assets/css/style.css'
-import { ModalProvider } from './components/LoginPageContext.jsx'
-import { LoginProvider } from './components/AuthContext.jsx'
+import { ModalProvider } from './components/auth/LoginPageContext.jsx'
+import { LoginProvider } from './components/auth/AuthContext.jsx'
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -31,15 +33,24 @@ const router = createBrowserRouter([
   {
     path: "/transactions",
     element: <Transaction />
+  },
+  {
+    path: "/logout",
+    element: <Logout />
   }
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ModalProvider>
+ReactDOM.createRoot(
+  document.getElementById('root')).render(
+    <React.StrictMode>
+
+
       <LoginProvider>
-        <RouterProvider router={router} />
+
+        <ModalProvider>
+          <RouterProvider router={router} />
+        </ModalProvider>
+
       </LoginProvider>
-    </ModalProvider>
-  </React.StrictMode>,
-)
+    </React.StrictMode>,
+  )

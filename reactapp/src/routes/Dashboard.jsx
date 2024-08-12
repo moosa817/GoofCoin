@@ -1,15 +1,15 @@
 import MyNav from "../components/navbar";
 import Header from "../components/header";
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../components/AuthContext";
+import { LoginContext } from "../components/auth/AuthContext";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { ModalContext } from "../components/LoginPageContext";
+import { ModalContext } from "../components/auth/LoginPageContext";
 import { useEffect } from "react";
 
 
 const Dashboard = () => {
-    const { isLogin } = useContext(LoginContext);
+    const { isLogin, Username, Email, Name } = useContext(LoginContext);
     const { openModal } = useContext(ModalContext);
 
 
@@ -27,6 +27,7 @@ const Dashboard = () => {
         <>
             <MyNav />
             <h1>Dashboard</h1>
+            {Name}
         </>)
 }
 export default Dashboard;

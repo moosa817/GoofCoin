@@ -2,9 +2,9 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Button, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import { Link } from "react-router-dom";
-import { ModalContext } from './LoginPageContext';
+import { ModalContext } from './auth/LoginPageContext';
 import { useContext } from 'react';
-import { LoginContext } from "../components/AuthContext"
+import { LoginContext } from "./auth/AuthContext"
 
 
 export default function MyNav() {
