@@ -1,9 +1,11 @@
+import { config } from '../../config';
+import TokenVerify from './TokenVerify';
 
 const Authenticate = async (username, password) => {
 
 
     try {
-        const response = await fetch('http://localhost:8000/api/token/', {
+        const response = await fetch(`${config.API_URL}/api/token/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +29,7 @@ const Authenticate = async (username, password) => {
 
 const GuestAuth = async () => {
     try {
-        const response = await fetch('http://localhost:8000/api/guest_user/', {
+        const response = await fetch(`${config.API_URL}/api/guest_user/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

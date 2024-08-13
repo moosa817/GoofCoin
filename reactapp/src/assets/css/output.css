@@ -1333,9 +1333,9 @@ input:checked + .toggle-bg {
   margin-bottom: 2rem;
 }
 
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .-mb-px {
@@ -1432,6 +1432,10 @@ input:checked + .toggle-bg {
 
 .mt-6 {
   margin-top: 1.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem;
 }
 
 .block {
@@ -2575,11 +2579,6 @@ input:checked + .toggle-bg {
   background-color: rgb(141 162 251 / var(--tw-bg-opacity));
 }
 
-.bg-indigo-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(104 117 245 / var(--tw-bg-opacity));
-}
-
 .bg-indigo-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(88 80 236 / var(--tw-bg-opacity));
@@ -2925,6 +2924,10 @@ input:checked + .toggle-bg {
   fill: #0891b2;
 }
 
+.fill-gray-300 {
+  fill: #D1D5DB;
+}
+
 .fill-gray-600 {
   fill: #4B5563;
 }
@@ -2947,18 +2950,6 @@ input:checked + .toggle-bg {
 
 .fill-yellow-400 {
   fill: #E3A008;
-}
-
-.fill-gray-300 {
-  fill: #D1D5DB;
-}
-
-.fill-gray-500 {
-  fill: #6B7280;
-}
-
-.fill-gray-400 {
-  fill: #9CA3AF;
 }
 
 .object-cover {

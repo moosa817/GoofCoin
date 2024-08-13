@@ -3,6 +3,8 @@ import { useState, useContext } from 'react';
 import { useRef } from 'react';
 import { Authenticate, GuestAuth } from './AuthApi';
 import { LoginContext } from './AuthContext';
+import Register from './RegisterApi.jsx';
+
 
 const LoadingSvg = (text) => {
     return (`<div role="status" class="flex items-center justify-center">
@@ -34,6 +36,39 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
     const isSignupFormValid = signupName && signupUsername && signupEmail && signupPassword && signupRePassword;
 
     const pwdError = useRef(null);
+    const UsernameError = useRef(null);
+    const EmailError = useRef(null);
+
+
+    const HandleSignup = async (e) => {
+        e.preventDefault();
+        UsernameError.current.innerHTML = "";
+        EmailError.current.innerHTML = "";
+        pwdError.current.innerHTML = "";
+        //change button value
+        e.target.disabled = true;
+        e.target.innerHTML = LoadingSvg('Signing Up');
+        const result = await Register(signupName, signupUsername, signupEmail, signupPassword);
+
+        if (result === true) {
+            setisLogin(true);
+        } else {
+            if (result.username) {
+                UsernameError.current.innerHTML = result.username;
+            }
+            if (result.email) {
+                EmailError.current.innerHTML = result.email;
+            }
+            if (result.password) {
+                console.log(result.password)
+                //each error in new line with br
+                pwdError.current.innerHTML = result.password.join('<br>');
+            }
+        }
+        e.target.disabled = false;
+        e.target.innerHTML = 'Sign Up';
+
+    }
 
     const handleGuestLogin = async (e) => {
         e.preventDefault();
@@ -79,9 +114,10 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
     const handleSignupRePasswordChange = (e) => {
         if (e.target.value !== signupPassword) {
             // toggle class
-            pwdError.current.classList.remove('hidden');
+            pwdError.current.innerHTML = "Passwords Do Not Match";
         } else {
-            pwdError.current.classList.add('hidden');
+            pwdError.current.innerHTML = "";
+
         }
 
         setSignupRePassword(e.target.value);
@@ -172,7 +208,9 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
                     Name
                 </label>
             </div>
-            <div className="relative z-0 w-full mb-5 group">
+
+
+            <div className="relative z-0 w-full mb-2 group">
                 <input
                     type="text"
                     autoComplete="username"
@@ -189,7 +227,9 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
                     Username
                 </label>
             </div>
-            <div className="relative z-0 w-full mb-5 group">
+            <div className='text-xs text-red-600 mb-3' ref={UsernameError}>
+            </div>
+            <div className="relative z-0 w-full mb-2 group">
                 <input
                     type="email"
                     autoComplete="email"
@@ -205,6 +245,8 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
                 >
                     Email address
                 </label>
+            </div>
+            <div className='text-xs text-red-600 mb-3' ref={EmailError}>
             </div>
             <div className="relative z-0 w-full mb-5 group">
                 <input
@@ -223,7 +265,7 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
                     Password
                 </label>
             </div>
-            <div className="relative z-0 w-full mb-5 group">
+            <div className="relative z-0 w-full my-5 group">
                 <input
                     type="password"
                     autoComplete="new-password"
@@ -240,9 +282,9 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
                     Confirm Password
                 </label>
 
-                <span className="text-xs text-red-700 font-semibold hidden" ref={pwdError}>Passwords Do Not Match</span>
+                <span className="text-xs text-red-700 font-semibold" ref={pwdError}></span>
             </div>
-            <button
+            <button onClick={HandleSignup}
                 className={`py-3 px-2 w-full duration-500 rounded-sm font-semibold ${isSignupFormValid ? 'bg-primary hover:scale-105' : 'bg-gray-400 cursor-not-allowed'}`}
                 disabled={!isSignupFormValid}
             >

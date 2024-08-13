@@ -45,6 +45,7 @@ const RefreshToken = async (refresh) => {
 
 
 //component
+// checks token , refresh's if needed saves username email etc
 const TokenVerify = () => {
     const { isLogin, setisLogin, setisLoading, setName, setEmail, setUsername } = useContext(LoginContext);
 
@@ -90,14 +91,14 @@ const TokenVerify = () => {
                 } catch (error) {
                     console.error('Refresh Token failed', error);
                 }
-            }else{
+            } else {
                 setisLoading(false);
 
             }
         };
 
         checkToken();
-    }, []);
+    }, [isLogin]);
 
 
     return null;
