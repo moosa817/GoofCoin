@@ -4,6 +4,8 @@ import LoginModal from "../components/auth/LoginModal"
 import { useContext } from "react"
 import { LoginContext } from "../components/auth/AuthContext"
 import { Navigate } from "react-router-dom"
+
+import GoogleSignIn from '../components/auth/GoogleSign';
 //page when user not logged in
 const Home = () => {
     const { isLogin } = useContext(LoginContext);
@@ -15,6 +17,7 @@ const Home = () => {
         <>
             <MyNav />
             <Header />
+            <GoogleSignIn />
             <LoginModal />
         </>)
 }

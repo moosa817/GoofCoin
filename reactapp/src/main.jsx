@@ -4,6 +4,7 @@ import Home from './routes/Home.jsx'
 import BlockChain from './routes/BlockChain.jsx'
 import Dashboard from './routes/Dashboard.jsx'
 import Logout from './routes/Logout.jsx'
+import Profile from './routes/Profile.jsx'
 import './assets/css/output.css'
 import './assets/css/style.css'
 import { ModalProvider } from './components/auth/LoginPageContext.jsx'
@@ -14,6 +15,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Transaction from './routes/Transactions.jsx'
+import TokenVerify from './components/auth/TokenVerify.jsx'
 
 
 const router = createBrowserRouter([
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/logout",
     element: <Logout />
+  },
+  {
+    path: "/profile/:username",
+    element: <Profile />
   }
 ]);
 
@@ -48,6 +54,7 @@ ReactDOM.createRoot(
       <LoginProvider>
 
         <ModalProvider>
+          <TokenVerify />
           <RouterProvider router={router} />
         </ModalProvider>
 

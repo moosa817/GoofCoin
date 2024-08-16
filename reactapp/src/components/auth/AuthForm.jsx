@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import { useRef } from 'react';
 import { Authenticate, GuestAuth } from './AuthApi';
 import { LoginContext } from './AuthContext';
-import Register from './RegisterApi.jsx';
+import Register from './RegisterApi.js';
 
 
 const LoadingSvg = (text) => {
