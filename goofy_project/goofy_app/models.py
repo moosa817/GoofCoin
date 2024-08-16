@@ -4,6 +4,9 @@ import hashlib
 import uuid
 import json
 from django.utils import timezone
+import requests
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 # Create your models here.
 # Changing User class model
@@ -15,8 +18,23 @@ class User(AbstractUser):
     name = models.CharField(max_length=255, blank=False, null=False)
     email = models.EmailField(unique=True, blank=False, null=False)
     guest = models.BooleanField(default=False)
+    google = models.BooleanField(default=False)
+    google_id = models.CharField(max_length=255, blank=True, null=True)
     public_key = models.TextField()
     is_new_user_setup_completed = models.BooleanField(default=False)
+    pfp = models.ImageField(upload_to="profile_pictures/", blank=True, null=True)
+
+    def save_image_from_url(self, url):
+        # Send a request to fetch the image from the URL
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            # Use BytesIO to handle the image in memory
+            img_io = BytesIO(response.content)
+            self.pfp.save(
+                f"image_{self.pk}.jpg", ContentFile(img_io.getvalue()), save=False
+            )
+            self.save()
 
 
 class Transaction(models.Model):

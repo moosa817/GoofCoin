@@ -6,9 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q  # Import Q object
 from .crypto_utils import generate_rsa_keypair
-from .transactions import make_transaction
+from .transactions import make_transaction, get_balance
 from django.conf import settings
-from api.serializers import TransactionSerializer, BlockChainSerializer
+from api.serializers import TransactionSerializer, BlockChainSerializer, PfpSerializer
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework import generics
 
@@ -95,3 +95,38 @@ class Transaction(APIView):
 class ViewBlockchain(generics.ListAPIView):
     serializer_class = BlockChainSerializer
     queryset = Block.objects.all()
+
+
+class VerifyToken(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        if request.user.pfp:
+            pfp = pfp.url
+        else:
+            pfp = None
+        # will use https://api.dicebear.com/9.x/pixel-art/svg?seed=NAME&hair=short01&size=300&width=100&height=100
+
+        return Response(
+            {
+                "valid": True,
+                "id": request.user.id,
+                "username": request.user.username,
+                "name": request.user.name,
+                "email": request.user.email,
+                "isGuest": request.user.guest,
+                "publickey": request.user.public_key,
+                "balance": get_balance(request.user),
+                "pfp": pfp,
+                "isGoogle": request.user.google,
+            }
+        )
+
+
+class Pfp(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = PfpSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user

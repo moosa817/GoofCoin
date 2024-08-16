@@ -15,7 +15,7 @@ from config import config
 from dotenv import load_dotenv
 import dj_database_url
 from datetime import timedelta
-
+from os import getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -131,6 +131,33 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
+
+
+# aws s3bucket config
+
+AWS_ACCESS_KEY_ID = CONFIG.AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = CONFIG.AWS_SECRET_ACCESS_KEY
+AWS_STORAGE_BUCKET_NAME = CONFIG.AWS_STORAGE_BUCKET_NAME
+CLOUDFRONT_DOMAIN = CONFIG.CLOUDFRONT_DOMAIN
+
+AWS_QUERYSTRING_EXPIRE = 604800
+
+AWS_S3_SIGNATURE_NAME = ("s3v4",)
+AWS_S3_REGION_NAME = "us-east-1"
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_DOMAIN
+
+
+if DEBUG == False:
+    STATIC_LOCATION = "static"
+    STATIC_URL = f"{CLOUDFRONT_DOMAIN}/static/"
+    # Add your path in the STATICFILES_STORAGE
+    STATICFILES_STORAGE = "goofy_project.storage_backends.StaticStorage"
+else:
+    STATIC_URL = "static/"
 
 
 # Static files (CSS, JavaScript, Images)

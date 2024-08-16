@@ -10,7 +10,7 @@ from .blockchain import Blockchain
 blockchain = Blockchain()
 
 
-def get_balance(user):
+def get_balance(user):  # send as request.user or User object
     sent_amount = Transaction.objects.filter(sender=user).aggregate(
         total=models.Sum("amount")
     )["total"] or Decimal("0.00")
