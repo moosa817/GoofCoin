@@ -10,7 +10,7 @@ const Profile = () => {
     let params = useParams();
     let UrlUsername = params.username;
 
-    const { isLogin, Username, Email, Name } = useContext(LoginContext);
+    const { isLogin, Username } = useContext(LoginContext);
     const { openModal } = useContext(ModalContext);
 
     useEffect(() => {
@@ -26,10 +26,15 @@ const Profile = () => {
     return (
         <>
             <MyNav />
-            <h1>Profile</h1>
-            {Name}
+            <div className="container">
+                <div className="flex justify-center">
+                    <div>
+                        <img src="{Profile}" alt="" />
+                    </div>
 
-            {UrlUsername === Username ? <h1>My Profile</h1> : <h1>Other Profile</h1>}
+                </div>
+
+            </div>
         </>)
 }
 export default Profile;

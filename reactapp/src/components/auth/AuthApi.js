@@ -19,7 +19,8 @@ const Authenticate = async (username, password) => {
             localStorage.setItem('refresh', data.refresh);
             return true;
         } else {
-            return false;
+            const data = await response.json();
+            return data.non_field_errors;
         }
     } catch (error) {
         console.error("Error during authentication:", error);
@@ -42,6 +43,7 @@ const GuestAuth = async () => {
             localStorage.setItem('refresh', data.refresh);
             return true;
         } else {
+            const data = await response.json();
             return false;
         }
     } catch (error) {

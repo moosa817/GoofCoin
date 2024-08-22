@@ -47,11 +47,10 @@ const RefreshToken = async (refresh) => {
 //component
 // checks token , refresh's if needed saves username email etc
 const TokenVerify = () => {
-    const { isLogin, setisLogin, setisLoading, Username, setName, setEmail, setUsername } = useContext(LoginContext);
+    const { isLogin, setisLogin, setisLoading, Username, setName, setEmail, setUsername, setPfp, setisGuest } = useContext(LoginContext);
 
 
     useEffect(() => {
-        console.log("here")
         if (Username != '') {
             //do nothing
         } else {
@@ -62,13 +61,14 @@ const TokenVerify = () => {
                 if (token) {
                     try {
                         const result = await AccessToken(token);
-                        console.log(result);
                         if (result.valid) {
                             setisLogin(true);
                             setisLoading(false);
                             setName(result.name);
                             setEmail(result.email);
                             setUsername(result.username);
+                            setPfp(result.pfp);
+                            setisGuest(result.isGuest);
                             return;
                         }
                     } catch (error) {
@@ -88,6 +88,8 @@ const TokenVerify = () => {
                                 setEmail(result2.email);
                                 setUsername(result2.username);
                                 setisLogin(true);
+                                setPfp(result2.pfp);
+                                setisGuest(result2.isGuest);
                                 setisLoading(false);
                             }
                             return;

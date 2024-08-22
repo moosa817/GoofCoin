@@ -4,16 +4,14 @@ import { GoogleAuthenticate } from './GoogleAuth';
 import { LoginContext } from './AuthContext';
 
 
-const GoogleSignIn = () => {
+const GoogleSignIn = ({ showButton }) => {
     const { isLogin, setisLogin, setisLoading } = useContext(LoginContext);
 
 
     const handleCredentialResponse = async (response) => {
-        console.log('Encoded JWT ID token: ' + response.credential);
 
         // Decode the JWT token to extract user information
         const decodedToken = jwtDecode(response.credential);
-        console.log('Decoded Token:', decodedToken);
 
         // Extract user information
         const userId = decodedToken.sub;
@@ -26,7 +24,6 @@ const GoogleSignIn = () => {
 
 
         if (result === true) {
-            console.log("trueee")
             setisLogin(true);
         }
 
@@ -41,9 +38,15 @@ const GoogleSignIn = () => {
                     callback: handleCredentialResponse,
                 });
 
+
                 window.google.accounts.id.renderButton(
                     document.getElementById('buttonDiv'),
-                    { theme: 'outline', size: 'large' }
+                    {
+                        theme: 'outline',
+                        size: 'large',
+                        width: 520,
+                        text: 'SignIn with Google',
+                    }
                 );
 
                 window.google.accounts.id.prompt();
@@ -66,9 +69,9 @@ const GoogleSignIn = () => {
     }, []);
 
     return (
-        <div>
-            <div id="buttonDiv"></div>
 
+        <div>
+            {showButton ? <div id="buttonDiv" className='mb-4'></div> : null}
         </div>
     );
 };

@@ -17,8 +17,8 @@ const Home = () => {
         <>
             <MyNav />
             <Header />
-            <GoogleSignIn />
             <LoginModal />
+            <GoogleSignIn showButton={false} />
         </>)
 }
 export default Home

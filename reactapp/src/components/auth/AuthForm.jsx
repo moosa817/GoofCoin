@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { Authenticate, GuestAuth } from './AuthApi';
 import { LoginContext } from './AuthContext';
 import Register from './RegisterApi.js';
+import GoogleSignIn from './GoogleSign';
 
 
 const LoadingSvg = (text) => {
@@ -60,7 +61,6 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
                 EmailError.current.innerHTML = result.email;
             }
             if (result.password) {
-                console.log(result.password)
                 //each error in new line with br
                 pwdError.current.innerHTML = result.password.join('<br>');
             }
@@ -135,7 +135,13 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
         if (result === true) {
             setisLogin(true);
         } else {
-            LoginError.current.innerHTML = 'Invalid Username or Password';
+            if (result == undefined) {
+                LoginError.current.innerHTML = "Invalid Username/Password";
+            } else {
+
+                LoginError.current.innerHTML = result;
+            }
+
         }
         e.target.disabled = false;
         e.target.innerHTML = 'Login';
@@ -305,6 +311,9 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
                         <GuestIcon className="mr-2" />
                         Sign in as Guest
                     </button>
+
+                    <GoogleSignIn showButton={true} />
+
                     <span className="mb-4">OR</span>
                     {renderLoginForm()}
                 </>

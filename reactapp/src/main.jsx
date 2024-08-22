@@ -54,7 +54,6 @@ ReactDOM.createRoot(
       <LoginProvider>
 
         <ModalProvider>
-          <TokenVerify />
           <RouterProvider router={router} />
         </ModalProvider>
 
