@@ -17,10 +17,11 @@ export const LoginProvider = ({ children }) => {
     const [Pfp, setPfp] = useState('');
     const [PublicKey, setPublicKey] = useState('');
     const [Balance, setBalance] = useState(0);
+    const [UserId, setUserId] = useState(null);
 
 
     return (
-        <LoginContext.Provider value={{ isLogin, setisLogin, Name, setName, Email, setEmail, Username, setUsername, isLoading, setisLoading, isGuest, setisGuest, Pfp, setPfp, PublicKey, setPublicKey, Balance, setBalance }}>
+        <LoginContext.Provider value={{ isLogin, setisLogin, Name, setName, Email, setEmail, Username, setUsername, isLoading, setisLoading, isGuest, setisGuest, Pfp, setPfp, PublicKey, setPublicKey, Balance, setBalance, setUserId, UserId }}>
 
             <TokenVerify />
             {isLoading ? <Loading /> : children}

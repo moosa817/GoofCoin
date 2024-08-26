@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User(
-            username=validated_data["username"],
+            username=validated_data["username"].lower(),
             email=validated_data["email"],
             name=validated_data["name"],
         )
@@ -43,7 +43,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):
-        username_or_email = attrs.get("username")
+        username_or_email = attrs.get("username").lower()
         password = attrs.get("password")
 
         user = None
@@ -98,6 +98,19 @@ class ConvertUserSerializer(serializers.ModelSerializer):
         representation["refresh"] = str(refresh)
         representation["access"] = str(refresh.access_token)
         return representation
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["name", "username"]
+
+
+class PasswordUpdateSerializer(serializers.Serializer):
+    old_password = serializers.CharField()
+    new_password = serializers.CharField()
+    confirm_password = serializers.CharField()
 
 
 class TransactionSerializer(serializers.Serializer):

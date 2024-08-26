@@ -34,7 +34,7 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
 
     const isLoginFormValid = loginUsername && loginPassword;
 
-    const isSignupFormValid = signupName && signupUsername && signupEmail && signupPassword && signupRePassword;
+    const isSignupFormValid = signupName && signupUsername && signupEmail && signupPassword && signupRePassword && signupPassword === signupRePassword;
 
     const pwdError = useRef(null);
     const UsernameError = useRef(null);

@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../components/auth/AuthContext";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { ModalContext } from "../components/auth/LoginPageContext";
+import { ModalContext } from "../components/ModalsContext";
 import { useEffect } from "react";
-
 
 const Dashboard = () => {
     const { isLogin, Username, Email, Name } = useContext(LoginContext);

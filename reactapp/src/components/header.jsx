@@ -1,5 +1,5 @@
 import Bg from '../assets/imgs/bg.svg'
-import { ModalContext } from './auth/LoginPageContext';
+import { ModalContext } from './ModalsContext';
 import { useContext } from 'react';
 const Header = () => {
 

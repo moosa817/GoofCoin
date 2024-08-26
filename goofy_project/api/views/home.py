@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
-from goofy_app.models import User, Block
+from goofy_app.models import User, Block, Transaction
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -43,7 +43,7 @@ class UserSetup(APIView):
         return response
 
 
-class Transaction(APIView):
+class TransactionView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = TransactionSerializer
     parser_classes = [MultiPartParser, JSONParser]
@@ -101,8 +101,9 @@ class VerifyToken(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+
         if request.user.pfp:
-            pfp = pfp.url
+            pfp = request.user.pfp.url
         else:
             pfp = None
         # will use https://api.dicebear.com/9.x/pixel-art/svg?seed=NAME&hair=short01&size=300&width=100&height=100
@@ -130,3 +131,35 @@ class Pfp(generics.UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class GetProfile(APIView):
+    permission_class = [IsAuthenticated]
+
+    def get(self, request, username):
+        if username == "system" or username == "admin":
+            return Response({"message": "User not found."}, status=404)
+
+        if not User.objects.filter(username=username).exists():
+            return Response({"message": "User not found."}, status=404)
+
+        user = User.objects.get(username=username)
+        if user.pfp:
+            pfp = user.pfp.url
+        else:
+            pfp = None
+
+        transactions = Transaction.objects.filter(Q(sender=user) | Q(recipient=user))
+
+        return Response(
+            {
+                "id": user.id,
+                "username": user.username,
+                "name": user.name,
+                "isGuest": user.guest,
+                "publickey": user.public_key,
+                "balance": get_balance(user),
+                "pfp": pfp,
+                "transactions": transactions,
+            }
+        )

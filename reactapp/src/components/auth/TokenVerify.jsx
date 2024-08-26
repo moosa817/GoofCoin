@@ -47,7 +47,7 @@ const RefreshToken = async (refresh) => {
 //component
 // checks token , refresh's if needed saves username email etc
 const TokenVerify = () => {
-    const { isLogin, setisLogin, setisLoading, Username, setName, setEmail, setUsername, setPfp, setisGuest } = useContext(LoginContext);
+    const { isLogin, setisLogin, setisLoading, Username, setName, setEmail, setUsername, setPfp, setisGuest, setUserId } = useContext(LoginContext);
 
 
     useEffect(() => {
@@ -69,6 +69,7 @@ const TokenVerify = () => {
                             setUsername(result.username);
                             setPfp(result.pfp);
                             setisGuest(result.isGuest);
+                            setUserId(result.id);
                             return;
                         }
                     } catch (error) {
@@ -91,6 +92,7 @@ const TokenVerify = () => {
                                 setPfp(result2.pfp);
                                 setisGuest(result2.isGuest);
                                 setisLoading(false);
+                                setUserId(result2.id);
                             }
                             return;
                         }

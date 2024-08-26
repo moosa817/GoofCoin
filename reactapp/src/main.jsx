@@ -7,7 +7,7 @@ import Logout from './routes/Logout.jsx'
 import Profile from './routes/Profile.jsx'
 import './assets/css/output.css'
 import './assets/css/style.css'
-import { ModalProvider } from './components/auth/LoginPageContext.jsx'
+import { ModalProvider } from './components/ModalsContext.jsx'
 import { LoginProvider } from './components/auth/AuthContext.jsx'
 
 import {
