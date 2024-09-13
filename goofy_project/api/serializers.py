@@ -104,7 +104,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["name", "username"]
+        fields = ["name", "username","email"]
 
 
 class PasswordUpdateSerializer(serializers.Serializer):

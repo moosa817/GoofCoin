@@ -44,7 +44,7 @@ const GoogleSignIn = ({ showButton }) => {
                     {
                         theme: 'outline',
                         size: 'large',
-                        width: 520,
+                        width: 300,
                         text: 'SignIn with Google',
                     }
                 );

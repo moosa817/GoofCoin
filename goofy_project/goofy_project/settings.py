@@ -151,21 +151,12 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_DOMAIN
 
 
-if DEBUG == False:
-    STATIC_LOCATION = "static"
-    STATIC_URL = f"{CLOUDFRONT_DOMAIN}/static/"
-    # Add your path in the STATICFILES_STORAGE
-    STATICFILES_STORAGE = "goofy_project.storage_backends.StaticStorage"
-else:
-    STATIC_URL = "static/"
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATICFILES_DIRS = [BASE_DIR / "frontend/assets"]
 
-STATIC_URL = "assets/"
+STATIC_URL = "/assets/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 

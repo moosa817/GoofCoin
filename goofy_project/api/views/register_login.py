@@ -145,12 +145,6 @@ class PasswordChange(APIView):
             if new_password != confirm_password:
                 return Response({"message": "Passwords do not match."}, status=400)
 
-            if new_password == old_password:
-                return Response(
-                    {"message": "New password cannot be the same as the old password."},
-                    status=400,
-                )
-
             try:
                 validate_password(new_password, user=request.user)
             except ValidationError as e:
@@ -159,6 +153,12 @@ class PasswordChange(APIView):
             # validate old password
             if not request.user.check_password(old_password):
                 return Response({"message": "Incorrect password."}, status=400)
+
+            if new_password == old_password:
+                return Response(
+                    {"message": "New password cannot be the same as the old password."},
+                    status=400,
+                )
 
             request.user.set_password(new_password)
             request.user.save()

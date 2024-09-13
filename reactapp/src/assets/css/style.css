@@ -11,8 +11,8 @@
 body {
     color: white;
     font-family: "Poppins", sans-serif;
-    overflow-y: hidden;
     background-color: #313c87;
+    overflow-x:hidden;
 }
 
 h1 {

@@ -5,6 +5,7 @@ import BlockChain from './routes/BlockChain.jsx'
 import Dashboard from './routes/Dashboard.jsx'
 import Logout from './routes/Logout.jsx'
 import Profile from './routes/Profile.jsx'
+import Settings from './routes/Settings.jsx'
 import './assets/css/output.css'
 import './assets/css/style.css'
 import { ModalProvider } from './components/ModalsContext.jsx'
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/profile/:username",
     element: <Profile />
+  },
+  {
+    path: "/settings",
+    element: <Settings />
   }
 ]);
 
