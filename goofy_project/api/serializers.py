@@ -7,6 +7,9 @@ from django.conf import settings
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from PIL import Image
+import io
+from django.core.files.base import ContentFile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -104,7 +107,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["name", "username","email"]
+        fields = ["name", "username", "email"]
 
 
 class PasswordUpdateSerializer(serializers.Serializer):
@@ -125,14 +128,50 @@ class BlockChainSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+from PIL import Image, ImageOps
+from django.core.files.base import ContentFile
+import io
+from rest_framework import serializers
+
+
 class PfpSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["pfp"]
 
     def update(self, instance, validated_data):
-        instance.pfp = validated_data.get("pfp", instance.pfp)
+        # Get the uploaded image from validated_data
+        pfp = validated_data.get("pfp", instance.pfp)
+
+        # Crop, center, and resize the image to 128x128 pixels if a new image is uploaded
+        if pfp:
+            # Open the image using Pillow
+            image = Image.open(pfp)
+
+            # Crop, center, and resize the image to 128x128
+            target_size = (128, 128)
+            resized_image = ImageOps.fit(
+                image,
+                target_size,
+                method=Image.Resampling.LANCZOS,
+                centering=(0.5, 0.5),
+            )
+
+            # Save the resized image to an in-memory buffer
+            buffer = io.BytesIO()
+            resized_image.save(
+                buffer, format="PNG"
+            )  # Save as PNG or adjust format if necessary
+            image_content = ContentFile(buffer.getvalue())
+
+            # Update the `pfp` field with the resized image
+            instance.pfp.save(
+                f"{instance.username}_profile.png", image_content, save=False
+            )
+
+        # Save the instance with the updated profile picture
         instance.save()
+
         return instance
 
 

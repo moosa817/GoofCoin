@@ -37,7 +37,7 @@ export default function MyNav() {
                                 <Dropdown
                                     className="mr-4"
                                     renderTrigger={() => (
-                                        <img className="rounded-full w-12 border-2 border-blue-500 h-auto hover:cursor-pointer hover:grayscale hover:scale-105" src={pfp} alt="pfp"></img>
+                                        <img className="rounded-full w-12 border-2 border-blue-500 h-12 hover:cursor-pointer hover:grayscale hover:scale-105 object-cover" src={pfp} alt="pfp"></img>
                                     )}
                                 >
                                     <Dropdown.Header>

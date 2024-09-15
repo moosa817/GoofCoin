@@ -10,7 +10,7 @@ const Profile = () => {
     let params = useParams();
     let UrlUsername = params.username;
 
-    const { isLogin, Username } = useContext(LoginContext);
+    const { isLogin,Name,Username,Pfp} = useContext(LoginContext);
     const { openModal } = useContext(ModalContext);
 
     useEffect(() => {
@@ -23,13 +23,14 @@ const Profile = () => {
         return <Navigate to="/" />;
     }
 
+    let pfp = Pfp ? Pfp: `https://api.dicebear.com/9.x/pixel-art/svg?seed=${Name}&hair=short01&size=50`;
     return (
         <>
             <MyNav />
             <div className="container">
                 <div className="flex justify-center">
                     <div>
-                        <img src="{Profile}" alt="" />
+                        <img src={pfp} alt="" />
                     </div>
 
                 </div>
