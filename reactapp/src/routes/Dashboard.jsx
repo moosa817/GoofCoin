@@ -3,7 +3,7 @@ import Header from "../components/header";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../components/auth/AuthContext";
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate ,Link} from "react-router-dom";
 import { ModalContext } from "../components/ModalsContext";
 import { useEffect } from "react";
 
@@ -25,8 +25,10 @@ const Dashboard = () => {
     return (
         <>
             <MyNav />
-            <h1>Dashboard</h1>
-            {Name}
+            <div className="fadeIn">
+            wow my nanme is {Name} its dashboarding time<br></br>
+            <Link to="/profile/moosa">moosa</Link>
+            </div>
         </>)
 }
 export default Dashboard;

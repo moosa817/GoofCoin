@@ -96,8 +96,9 @@ class ViewBlockchain(generics.ListAPIView):
     serializer_class = BlockChainSerializer
     queryset = Block.objects.all()
 
-
+import time
 class VerifyToken(APIView):
+    time.sleep(4)
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
