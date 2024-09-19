@@ -8,7 +8,7 @@ import { LoginContext } from "./auth/AuthContext"
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiUserAdd, HiLogout, HiUserCircle } from "react-icons/hi";
 import GuestConvertModal from "./auth/ConvertModal";
-
+import HeaderLogo from '../assets/imgs/header-logo.png';
 
 export default function MyNav() {
     const { openModal, setConvertOpenModal } = useContext(ModalContext);
@@ -23,7 +23,7 @@ export default function MyNav() {
             {isGuest ? <GuestConvertModal /> : ''}
             < Navbar fluid rounded className="bg-background mr-3 overflow-hidden" >
                 <NavbarBrand href="/">
-                    <img src="/src/assets/imgs/header-logo.png" className="mr-3 h-14 sm:h-16" alt="Logo" />
+                    <img src={HeaderLogo} className="mr-3 h-14 sm:h-16" alt="Logo" />
                 </NavbarBrand>
                 <NavbarToggle className="text-white hover:scale-125 duration-500 hover:bg-transparent border-none" />
                 <NavbarCollapse >
