@@ -1,9 +1,10 @@
 import { LoginContext } from './AuthContext';
 import { useEffect, useContext } from 'react';
+import {config} from '../../config'
 
 const AccessToken = async (token) => {
     try {
-        const response = await fetch('http://localhost:8000/api/verify-token/', {
+        const response = await fetch(`${config.API_URL}/api/verify-token/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +25,7 @@ const AccessToken = async (token) => {
 
 const RefreshToken = async (refresh) => {
     try {
-        const response = await fetch('http://localhost:8000/api/refresh/', {
+        const response = await fetch(`${config.API_URL}/api/refresh/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
