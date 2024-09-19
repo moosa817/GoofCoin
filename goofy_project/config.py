@@ -34,6 +34,7 @@ lQIDAQAB
         "localhost",
         "127.0.0.1",
         "goofcoin.vercel.app",
+        "192.168.18.123",
     ]
 
     class Config:
