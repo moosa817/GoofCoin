@@ -7,6 +7,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 # loading react build
+#username for /profile/str
 @ensure_csrf_cookie
-def home(request):
+def home(request,username=None):
     return render(request, "index.html")
