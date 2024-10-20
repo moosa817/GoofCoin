@@ -121,6 +121,7 @@ class VerifyToken(APIView):
                 "balance": get_balance(request.user),
                 "pfp": pfp,
                 "isGoogle": request.user.google,
+                "SetupCompleted":request.user.is_new_user_setup_completed
             }
         )
 

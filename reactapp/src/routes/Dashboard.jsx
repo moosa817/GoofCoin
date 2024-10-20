@@ -3,12 +3,12 @@ import Header from "../components/header";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../components/auth/AuthContext";
 import { useContext } from "react";
-import { Navigate ,Link} from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { ModalContext } from "../components/ModalsContext";
 import { useEffect } from "react";
 
 const Dashboard = () => {
-    const { isLogin, Username, Email, Name } = useContext(LoginContext);
+    const { isLogin, Username, Email, Name, SetupCompleted } = useContext(LoginContext);
     const { openModal } = useContext(ModalContext);
 
 
@@ -22,12 +22,13 @@ const Dashboard = () => {
         return <Navigate to="/" />;
     }
 
+    console.log(SetupCompleted);
     return (
         <>
             <MyNav />
             <div className="fadeIn">
-            wow my nanme is {Name} its dashboarding time<br></br>
-            <Link to="/profile/moosa">moosa</Link>
+                wow my nanme is {Name} its dashboarding time<br></br>
+                <Link to="/profile/moosa">moosa</Link>
             </div>
         </>)
 }

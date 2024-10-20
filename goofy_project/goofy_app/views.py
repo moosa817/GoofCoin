@@ -10,4 +10,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 #username for /profile/str
 @ensure_csrf_cookie
 def home(request,username=None):
-    return render(request, "index.html")
+    response = render(request, 'index.html')
+    response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    return response
