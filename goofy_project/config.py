@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-
+import os
 
 class Settings(BaseSettings):
     API_TITLE: str = "GOOFCOIN API"
@@ -38,7 +38,8 @@ lQIDAQAB
     ]
 
     class Config:
-        env_file = ".env"
+        ENV_PATH = os.path.join(os.path.dirname(__file__), ".env")
+        env_file = ENV_PATH
 
 
 config = Settings()

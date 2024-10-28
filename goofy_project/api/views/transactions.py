@@ -27,7 +27,8 @@ def has_sufficient_balance(amount, user):
     return current_balance >= amount
 
 
-def make_transaction(sender, receiver, amount, private_key):
+def make_transaction(sender: str, receiver: str, amount: float, private_key: str):
+    private_key = private_key.strip().replace("\\n", "\n")
     sender_user = User.objects.get(username=sender)
     receiver = receiver.strip().replace("\r\n", "\n")
 
@@ -39,7 +40,8 @@ def make_transaction(sender, receiver, amount, private_key):
         return "Invalid Receiver"
 
     amount = float(amount)
-    msg = f"{sender_user.username}->{receiver_user.username}:{amount:.2f}"
+    unique_id = Transaction.objects.count() + 1
+    msg = f"{sender_user.username}->{receiver_user.username}:{amount:.2f}:{unique_id}"
 
     if sender_user == receiver_user:
         return "Cannot Send to Yourself"
@@ -55,7 +57,7 @@ def make_transaction(sender, receiver, amount, private_key):
     if not has_sufficient_balance(amount, sender_user):
         return "Insufficient Balance"
 
-    if not verify_signature(msg.encode(), signature, sender_user.public_key):
+    if not verify_signature(msg.encode(), signature, sender_user.public_key.strip()):
         return "Invalid Signature"
 
     transaction = Transaction.objects.create(

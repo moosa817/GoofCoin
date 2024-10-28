@@ -5,6 +5,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // change build dest
+  server: {
+    watch: {
+      usePolling: true
+    }
+  },
   build: {
     assetsDir: 'assets',
     assetsInlineLimit: 0,  // Disable inlining

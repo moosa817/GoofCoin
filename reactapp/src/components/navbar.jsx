@@ -9,15 +9,22 @@ import { Dropdown } from "flowbite-react";
 import { HiCog, HiUserAdd, HiLogout, HiUserCircle } from "react-icons/hi";
 import GuestConvertModal from "./auth/ConvertModal";
 import HeaderLogo from '../assets/imgs/header-logo.png';
+import { Navigate } from 'react-router-dom'
 
 export default function MyNav() {
     const { openModal, setConvertOpenModal } = useContext(ModalContext);
-    const { isLogin, Pfp, Username, Name, isGuest } = useContext(LoginContext);
+    const { isLogin, Pfp, Username, Name, isGuest, SetupCompleted } = useContext(LoginContext);
+
+
+    if (!SetupCompleted && window.location.pathname != '/setup' && isLogin) {
+        return <Navigate to="/setup" />
+
+    }
 
     let link = `/profile/${Username}`;
 
-    let pfp = Pfp ? Pfp: `https://api.dicebear.com/9.x/pixel-art/svg?seed=${Name}&hair=short01&size=50`;
- 
+    let pfp = Pfp ? Pfp : `https://api.dicebear.com/9.x/pixel-art/svg?seed=${Name}&hair=short01&size=50`;
+
     return (
         <>
             {isGuest ? <GuestConvertModal /> : ''}

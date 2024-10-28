@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const DangerAlert = ({ msg }) => {
     const [IsShow, setIsShow] = useState(true);
-    setInterval(() => {
-        setIsShow(false);
-    }, 20000);
+
+    useEffect(() => {
+        setInterval(() => {
+            setIsShow(false);
+        }, 20000);
+
+        setIsShow(true)
+    }, [msg])
 
 
     return (
@@ -30,14 +35,18 @@ export const DangerAlert = ({ msg }) => {
 
 export const SuccessAlert = ({ msg }) => {
     const [IsShow, setIsShow] = useState(true);
-    setInterval(() => {
-        setIsShow(false);
-    }, 20000);
+
+    useEffect(() => {
+        setInterval(() => {
+            setIsShow(false);
+        }, 20000);
+
+    }, [msg])
 
 
     return (
         IsShow &&
-        <div className="fixed bottom-4 right-1 z-10">            <div id="alert-border-2" className="fadeIn flex items-center p-4 mb-4 text-green-600 border-t-4 bg-green-50 dark:bg-gray-800 border-green-800" role="alert" >
+        <div className="fixed bottom-4 right-1 z-10">            <div id="alert-border-2" className="fadeIn flex items-center p-4 mb-4 text-green-600 border-t-4 bg-green-50 dark:bg-gray-800 border-indigo-800" role="alert" >
             <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>

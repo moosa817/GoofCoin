@@ -25,13 +25,20 @@ class UserSetup(APIView):
         private_key, public_key = generate_rsa_keypair()
 
         user = request.user
+
+        print(request.user.username, settings.CONFIG.SYSTEM_PRIVATE_KEY.strip())
         result = make_transaction(
-            "system", request.user.username, 1000, settings.CONFIG.SYSTEM_PRIVATE_KEY
+            "system",
+            request.user.username,
+            1000,
+            settings.CONFIG.SYSTEM_PRIVATE_KEY.strip(),
         )
         print(result)
 
         if result != "Transaction Successful":
-            return Response({"message": "Failed to credit initial balance."})
+            return Response(
+                {"message": "Failed to credit initial balance."}, status=400
+            )
 
         user.public_key = public_key.strip()
         user.is_new_user_setup_completed = True
@@ -96,7 +103,10 @@ class ViewBlockchain(generics.ListAPIView):
     serializer_class = BlockChainSerializer
     queryset = Block.objects.all()
 
+
 import time
+
+
 class VerifyToken(APIView):
     time.sleep(4)
     permission_classes = [IsAuthenticated]
@@ -121,7 +131,7 @@ class VerifyToken(APIView):
                 "balance": get_balance(request.user),
                 "pfp": pfp,
                 "isGoogle": request.user.google,
-                "SetupCompleted":request.user.is_new_user_setup_completed
+                "SetupCompleted": request.user.is_new_user_setup_completed,
             }
         )
 
