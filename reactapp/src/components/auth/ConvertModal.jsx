@@ -1,10 +1,9 @@
 import { Modal } from "flowbite-react";
 import { useContext, useState, useRef } from "react";
 import { ModalContext } from "../ModalsContext";
-import { Close } from "@material-ui/icons";
 import { ConvertGuest } from "./ConvertGuestApi";
 import { LoginContext } from "./AuthContext";
-
+import CloseIcon from '@mui/icons-material/Close';
 const LoadingSvg = (text) => {
     return (`<div role="status" class="flex items-center justify-center">
     <svg aria-hidden="true" class="inline w-6 h-6 text-white animate-spin  fill-gray-300 dark:fill-gray-300" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +97,7 @@ export default function GuestConvertModal() {
             <Modal show={openConvertModal} onClose={() => setConvertOpenModal(false)} size="md">
                 <Modal.Body className="bg-gray-800 text-white">
                     <div className="my-4">
-                        <div className="flex justify-around" ><div className="text-center text-xl font-semibold">Convert Guest To Member</div><Close onClick={() => { setConvertOpenModal(false) }} className="hover:cursor-pointer" /></div>
+                        <div className="flex justify-around" ><div className="text-center text-xl font-semibold">Convert Guest To Member</div><CloseIcon onClick={() => { setConvertOpenModal(false) }} className="hover:cursor-pointer" /></div>
 
 
                     </div>

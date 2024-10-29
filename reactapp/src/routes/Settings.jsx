@@ -1,16 +1,17 @@
+/* eslint-disable no-unused-vars */
 import Navbar from "../components/navbar"
 import { LoginContext } from "../components/auth/AuthContext"
 import { useContext, useState } from "react"
 import { ModalContext } from "../components/ModalsContext"
 import { useEffect } from "react"
 import { Navigate } from "react-router-dom"
-import { AccountBoxRounded, Lock } from "@material-ui/icons"
 import { DangerAlert, SuccessAlert } from "../components/alerts"
 import ChangePassword from "../components/auth/ChangePassword"
 import ChangeProfile from "../components/auth/ChangeProfile"
 import { useRef } from "react"
 import { handleUpload } from "../components/auth/ChangePfp"
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LockIcon from '@mui/icons-material/Lock';
 
 const Settings = () => {
     const { Name, Username, Email, Pfp, isLogin, isGuest, IsGoogle, setPfp } = useContext(LoginContext);
@@ -28,6 +29,7 @@ const Settings = () => {
         if (isGuest) {
             setConvertOpenModal(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLogin, openModal]);
 
     let pfp = Pfp ? Pfp : `https://api.dicebear.com/9.x/pixel-art/svg?seed=${Name}&hair=short01&size=50`;
@@ -41,6 +43,7 @@ const Settings = () => {
 
 
     //change image logic
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const fileInputRef = useRef(null);
     const handleFileChange = async (event) => {
 
@@ -113,12 +116,12 @@ const Settings = () => {
             </div>
             <div className="flex justify-center gap-4 my-12 text-xs sm:text-md">
                 <div onClick={() => setPage('account')} className={page === 'account' ? "settings-link border-b-2" : "settings-link opacity-50"}>
-                    <AccountBoxRounded />Account Information
+                    <AccountCircleIcon />Account Information
                 </div>
 
                 {IsGoogle ? '' :
                     <div onClick={() => setPage('password')} className={page === 'password' ? "settings-link border-b-2" : "settings-link opacity-50"}>
-                        <Lock />Change Password
+                        <LockIcon />Change Password
                     </div>}
             </div>
 
