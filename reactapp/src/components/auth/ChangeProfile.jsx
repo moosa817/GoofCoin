@@ -1,8 +1,11 @@
 import { UpdateProfile } from './UpdateProfile.js';
-import { DangerAlert,SuccessAlert } from '../alerts.jsx';
-import { useState } from "react";
+import { DangerAlert, SuccessAlert } from '../alerts.jsx';
+import { useState, useContext } from "react";
+import { LoginContext } from './AuthContext.jsx';
+
 export default function ChangeProfile({ name, username, email }) {
 
+    const { setUsername, setEmail, setName } = useContext(LoginContext);
     const [errorMsg, setErrorMsg] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
 
@@ -36,6 +39,9 @@ export default function ChangeProfile({ name, username, email }) {
                 }
             } else {
                 setSuccessMsg('Profile Updated');
+                setUsername(username1);
+                setEmail(email1);
+                setName(name1);
                 update_btn.innerHTML = "Updated";
                 setTimeout(() => {
                     update_btn.innerHTML = "Update";

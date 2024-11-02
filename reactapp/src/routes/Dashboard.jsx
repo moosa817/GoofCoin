@@ -1,6 +1,4 @@
 import MyNav from "../components/navbar";
-import Header from "../components/header";
-import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../components/auth/AuthContext";
 import { useContext } from "react";
 import { Navigate, Link } from "react-router-dom";
@@ -28,7 +26,6 @@ const Dashboard = () => {
             <MyNav />
             <div className="fadeIn">
                 wow my nanme is {Name} its dashboarding time<br></br>
-                <Link to="/profile/moosa">moosa</Link>
             </div>
         </>)
 }

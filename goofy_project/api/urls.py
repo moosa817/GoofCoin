@@ -26,4 +26,5 @@ urlpatterns = [
     path("verify-token/", home.VerifyToken.as_view()),
     path("upload_pfp/", home.Pfp.as_view()),
     path("get_profile/<str:username>", home.GetProfile.as_view()),
+    path("get_transactions/<str:username>", home.GetTransactions.as_view()),
 ]

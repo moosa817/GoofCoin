@@ -4,13 +4,19 @@ from goofy_app.models import User, Block, Transaction
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.db.models import Q  # Import Q object
+from django.db.models import Q, Sum  # Import Q object
 from .crypto_utils import generate_rsa_keypair
 from .transactions import make_transaction, get_balance
 from django.conf import settings
-from api.serializers import TransactionSerializer, BlockChainSerializer, PfpSerializer
+from api.serializers import (
+    TransactionSerializer,
+    BlockChainSerializer,
+    PfpSerializer,
+    TransactionGetSerializer,
+)
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework import generics
+from decimal import Decimal
 
 
 class UserSetup(APIView):
@@ -163,6 +169,8 @@ class GetProfile(APIView):
 
         transactions = Transaction.objects.filter(Q(sender=user) | Q(recipient=user))
 
+        transactions_serialized = TransactionSerializer(transactions, many=True).data
+
         return Response(
             {
                 "id": user.id,
@@ -172,6 +180,36 @@ class GetProfile(APIView):
                 "publickey": user.public_key,
                 "balance": get_balance(user),
                 "pfp": pfp,
-                "transactions": transactions,
+                "transactions": transactions_serialized,
+            }
+        )
+
+
+class GetTransactions(APIView):
+
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        try:
+            transactions = Transaction.objects.filter(
+                Q(sender=user) | Q(recipient=user)
+            )
+        except Transaction.DoesNotExist:
+            return Response({"message": "Transaction not found."}, status=404)
+
+        transaction_serialized = TransactionGetSerializer(transactions, many=True).data
+
+        sent_amount = Transaction.objects.filter(sender=user).aggregate(
+            total=Sum("amount")
+        )["total"] or Decimal("0.00")
+
+        received_amount = Transaction.objects.filter(recipient=user).aggregate(
+            total=Sum("amount")
+        )["total"] or Decimal("0.00")
+
+        return Response(
+            {
+                "transactions": transaction_serialized,
+                "sent_amount": sent_amount,
+                "received_amount": received_amount,
             }
         )

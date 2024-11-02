@@ -1,7 +1,7 @@
 # serializers.py
 
 from rest_framework import serializers
-from goofy_app.models import User, Block
+from goofy_app.models import User, Block, Transaction
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.conf import settings
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
@@ -180,3 +180,27 @@ class GoogleUserSerializer(serializers.Serializer):
     name = serializers.CharField()
     email = serializers.EmailField()
     pfp_url = serializers.URLField()
+
+
+class TransactionGetSerializer(serializers.ModelSerializer):
+    sender_username = serializers.CharField(source="sender.username", read_only=True)
+    recipient_username = serializers.CharField(
+        source="recipient.username", read_only=True
+    )
+    sender_PublicKey = serializers.CharField(source="sender.public_key", read_only=True)
+    recipient_PublicKey = serializers.CharField(
+        source="recipient.public_key", read_only=True
+    )
+
+    class Meta:
+        model = Transaction
+        fields = [
+            "id",
+            "amount",
+            "timestamp",
+            "signature",
+            "sender_username",
+            "recipient_username",
+            "sender_PublicKey",
+            "recipient_PublicKey",
+        ]
