@@ -22,7 +22,7 @@ urlpatterns = [
     # other views
     path("setup/", home.UserSetup.as_view()),
     path("make-transaction/", home.TransactionView.as_view()),
-    path("view-blockchain/", home.ViewBlockchain.as_view()),
+    path("view-blockchain/<str:username>", home.ViewBlockchain.as_view()),
     path("verify-token/", home.VerifyToken.as_view()),
     path("upload_pfp/", home.Pfp.as_view()),
     path("get_profile/<str:username>", home.GetProfile.as_view()),

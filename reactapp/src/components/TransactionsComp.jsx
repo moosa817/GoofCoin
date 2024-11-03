@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 
 const ForwardArrow = () => (
@@ -21,31 +23,39 @@ const ForwardArrow = () => (
 );
 
 const LinkArrow = () => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="70.9041 9.2774 382.8843 428.6662"
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"
         style={{
-            width: '50px',
-            height: '50px',
+            width: '70px',
+            height: '80px',
             position: 'absolute',
             zIndex: '10',
-            right: '-5%',
+            right: '-9%',
             bottom: '-16%',
             fill: '#74f2cc'
         }}
-        className="absolute sm:hidden"
-    >
-        <path
-            d="M 58.748 -99.757 L 58.68 -90.149 C 85.558 -89.709 142.077 -54.364 141.92 -31.966 C 141.763 -9.567 150.223 82.117 123.346 81.677 L 32.164 87.547 L 66.486 59.108 L 61.117 54.52 L 17.908 89.715 L 60.852 126.62 L 66.284 122.209 L 32.899 95.711 L 126.652 91.86 C 157.61 92.367 149.102 -4.943 149.315 -35.276 C 149.528 -65.61 89.707 -99.25 58.748 -99.757 Z"
-            transform="matrix(2.893573045731, 0, 0, -1.893594026566, 179.007694506083, 209.011438055521)"
-        />
+        className="absolute sm:hidden">
+        <defs>
+            <bx:export>
+                <bx:file format="svg" href="#SVGRepo_iconCarrier" />
+            </bx:export>
+        </defs>
+        <g id="SVGRepo_bgCarrier" strokeWidth="0" transform="matrix(1, 0, 0, 1, 46.334236, 9.817387)" />
+        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" transform="matrix(1, 0, 0, 1, 46.334236, 9.817387)" />
+        <g id="SVGRepo_iconCarrier" transform="matrix(0.769585, 0, 0, 0.764286, 51.42041, 1.39042)">
+            <polygon points="79.746,65.36 123.894,21.213 102.681,0 22.074,80.606 102.681,161.213 123.894,140 79.254,95.36 325.295,95.36 325.295,377.369 355.295,377.369 355.295,65.36 " />
+        </g>
+        <rect x="302.434" y="283.708" width="21.536" height="106.742" style={{ stroke: ' rgb(0, 0, 0) ' }} />
+        <rect x="237.828" y="367.978" width="86.142" height="23.408" style={{ stroke: 'rgb(0, 0, 0)' }} />
     </svg>
 );
 
 const TransactionBox = ({ transactions }) => {
+    const reversed_transactions = [...transactions].reverse();
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full sm:gap-3 justify-center overflow-x-hidden">
-            {transactions.map((transaction, index) => (
+
+            {reversed_transactions.map((transaction, index) => (
                 <SingleTransaction key={transaction.id} transaction={transaction} isLast={index === transactions.length - 1} />
             ))}
         </div>
@@ -68,7 +78,7 @@ const SingleTransaction = ({ transaction, isLast }) => {
     });
 
     return (
-        <div className="transaction-box w-[90%] p-3 bg-[#2a316d] text-white rounded-lg shadow-lg relative border border-[#50acf7] shadow-lg hover:shadow-2xl transition-shadow">
+        <div className="transaction-box duration-700 w-[90%] p-3 bg-[#2a316d] text-white rounded-lg relative border border-[#50acf7] shadow-lg hover:shadow-2xl transition-shadow">
             <h3 className="text-lg font-semibold mb-1 text-[#50acf7]">Transaction Details</h3>
             <div className="transaction-detail mb-1">
                 <span className="font-medium text-[#74f2cc]">Sender:</span> {transaction.sender_username}
@@ -104,11 +114,11 @@ const SingleTransaction = ({ transaction, isLast }) => {
                     <div className="bg-[#313c87] p-4 rounded-lg shadow-lg w-3/4 max-w-lg text-white border border-[#50acf7]">
                         <h2 className="text-xl font-semibold text-[#50acf7] mb-2">Public Keys</h2>
                         <div className="mb-3">
-                            <div className="text-[#74f2cc] font-medium mb-1">Sender's Public Key:</div>
+                            <div className="text-[#74f2cc] font-medium mb-1">Sender&apos;s Public Key:</div>
                             <pre className="bg-[#144185] p-2 rounded overflow-x-auto text-xs">{transaction.sender_PublicKey}</pre>
                         </div>
                         <div className="mb-3">
-                            <div className="text-[#74f2cc] font-medium mb-1">Recipient's Public Key:</div>
+                            <div className="text-[#74f2cc] font-medium mb-1">Recipient&apos;s Public Key:</div>
                             <pre className="bg-[#144185] p-2 rounded overflow-x-auto text-xs">{transaction.recipient_PublicKey}</pre>
                         </div>
                         <button

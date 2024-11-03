@@ -143,3 +143,124 @@ h1 {
     color: #313c87;
     text-align: center;
 }
+
+.settings-link {
+    color: #50acf7;
+    text-decoration: none;
+    font-size: 1.2em;
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    transition: color 0.9s;
+    margin-right: 20px;
+
+}
+
+/* for smaller devices */
+@media only screen and (max-width: 600px) {
+    .settings-link {
+        font-size: 1em;
+        margin-right: 5px;
+    }
+}
+
+.settings-link:hover {
+    color: #74f2cc;
+    cursor: pointer;
+}
+
+/* Container for blockchain view */
+.blockchain-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Styling each block card */
+.block-card {
+    background-color: #313c87;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* List of transactions */
+.transaction-item {
+    cursor: pointer;
+    color: #50acf7;
+    text-decoration: underline;
+}
+
+.transaction-item:hover {
+    color: #74f2cc;
+}
+
+/* Transaction modal box styling */
+.transaction-box {
+    background-color: #3b4691;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    max-width: 400px;
+    margin: 12px auto;
+    color: #ffffff;
+}
+
+.transaction-box h3 {
+    margin: 0;
+    font-size: 1.4em;
+    border-bottom: 1px solid #50acf7;
+    padding-bottom: 10px;
+}
+
+.transaction-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 1em;
+}
+
+.transaction-detail .label {
+    font-weight: bold;
+}
+
+.transaction-detail.amount {
+    background-color: #50acf7;
+    padding: 8px;
+    border-radius: 8px;
+    color: #313c87;
+    text-align: center;
+}
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.close-button {
+    background-color: #50acf7;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.close-button:hover {
+    background-color: #144185;
+}

@@ -1,4 +1,3 @@
-import time
 import hashlib
 import json
 from goofy_app.models import Block, Transaction

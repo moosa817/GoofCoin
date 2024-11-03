@@ -3,13 +3,13 @@
 from rest_framework import serializers
 from goofy_app.models import User, Block, Transaction
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.conf import settings
-from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from PIL import Image
-import io
 from django.core.files.base import ContentFile
+from PIL import Image, ImageOps
+import io
+from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -116,22 +116,10 @@ class PasswordUpdateSerializer(serializers.Serializer):
     confirm_password = serializers.CharField()
 
 
-class TransactionSerializer(serializers.Serializer):
+class MakeTransactionSerializer(serializers.Serializer):
     recipient = serializers.CharField()
     amount = serializers.FloatField()
     privateKeyFile = serializers.FileField()
-
-
-class BlockChainSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Block
-        fields = "__all__"
-
-
-from PIL import Image, ImageOps
-from django.core.files.base import ContentFile
-import io
-from rest_framework import serializers
 
 
 class PfpSerializer(serializers.ModelSerializer):
@@ -204,3 +192,13 @@ class TransactionGetSerializer(serializers.ModelSerializer):
             "sender_PublicKey",
             "recipient_PublicKey",
         ]
+
+
+class BlockChainSerializer(serializers.ModelSerializer):
+    transactions = TransactionGetSerializer(
+        many=True
+    )  # Use TransactionGetSerializer for transactions
+
+    class Meta:
+        model = Block
+        fields = "__all__"

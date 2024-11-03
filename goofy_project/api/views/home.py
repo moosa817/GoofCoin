@@ -9,7 +9,7 @@ from .crypto_utils import generate_rsa_keypair
 from .transactions import make_transaction, get_balance
 from django.conf import settings
 from api.serializers import (
-    TransactionSerializer,
+    MakeTransactionSerializer,
     BlockChainSerializer,
     PfpSerializer,
     TransactionGetSerializer,
@@ -58,7 +58,7 @@ class UserSetup(APIView):
 
 class TransactionView(APIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = TransactionSerializer
+    serializer_class = MakeTransactionSerializer
     parser_classes = [MultiPartParser, JSONParser]
 
     def post(self, request):
@@ -105,16 +105,45 @@ class TransactionView(APIView):
             return Response(serializer.errors, status=400)
 
 
-class ViewBlockchain(generics.ListAPIView):
+class ViewBlockchain(APIView):
     serializer_class = BlockChainSerializer
-    queryset = Block.objects.all()
 
+    def get(
+        self,
+        request,
+        username,
+    ):
+        if username == "all":
+            blocks = Block.objects.all()
+            transactions_count = Transaction.objects.count()
+        else:
+            try:
+                user = User.objects.get(username=username)
 
-import time
+            except User.DoesNotExist:
+                return Response({"message": "User not found."}, status=404)
+
+            blocks = Block.objects.filter(
+                Q(transactions__sender=user) | Q(transactions__recipient=user)
+            )
+            transactions_count = Transaction.objects.filter(
+                Q(sender=user) | Q(recipient=user)
+            ).count()
+
+        serializer = self.serializer_class(blocks, many=True)
+        blocks_count = blocks.count()
+
+        return Response(
+            {
+                "blocks": serializer.data,
+                "blocks_count": blocks_count,
+                "transactions_count": transactions_count,
+                "average_transaction": 2,
+            }
+        )
 
 
 class VerifyToken(APIView):
-    time.sleep(4)
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -169,7 +198,26 @@ class GetProfile(APIView):
 
         transactions = Transaction.objects.filter(Q(sender=user) | Q(recipient=user))
 
-        transactions_serialized = TransactionSerializer(transactions, many=True).data
+        transactions_serialized = TransactionGetSerializer(transactions, many=True).data
+
+        sent_amount = Transaction.objects.filter(sender=user).aggregate(
+            total=Sum("amount")
+        )["total"] or Decimal("0.00")
+
+        received_amount = Transaction.objects.filter(recipient=user).aggregate(
+            total=Sum("amount")
+        )["total"] or Decimal("0.00")
+
+        blocks = Block.objects.filter(
+            Q(transactions__sender=user) | Q(transactions__recipient=user)
+        )
+
+        transactions_count = Transaction.objects.filter(
+            Q(sender=user) | Q(recipient=user)
+        ).count()
+
+        serializer = BlockChainSerializer(blocks, many=True)
+        blocks_count = blocks.count()
 
         return Response(
             {
@@ -179,8 +227,14 @@ class GetProfile(APIView):
                 "isGuest": user.guest,
                 "publickey": user.public_key,
                 "balance": get_balance(user),
+                "sent_amount": sent_amount,
+                "received_amount": received_amount,
                 "pfp": pfp,
                 "transactions": transactions_serialized,
+                "blocks": serializer.data,
+                "blocks_count": blocks_count,
+                "transactions_count": transactions_count,
+                "average_transaction": 2,
             }
         )
 

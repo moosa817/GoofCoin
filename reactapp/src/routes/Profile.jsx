@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import MyNav from "../components/navbar";
 import { LoginContext } from "../components/auth/AuthContext";
 import { useContext, useEffect, useState } from "react";
@@ -6,6 +7,9 @@ import { ModalContext } from "../components/ModalsContext";
 import { useParams, Link } from "react-router-dom";
 import { config } from "../config";
 import Loading from '../components/Loading';
+import { TransactionBox } from '../components/TransactionsComp';
+import BlockchainView from "../components/BlockChainComp"
+
 
 // Function to get the profile data
 const GetProfile = async (Username) => {
@@ -78,7 +82,7 @@ const Profile = () => {
                             </div>
 
                             <div className="font-semibold text-lg mt-2">{profileData?.name || "User"}</div>
-                            <div className="text-gray-300">@{profileData?.username || "username"}</div>
+                            <div className="text-gray-300">@{profileData.username || "username"}</div>
 
                             {/* Only show Edit Profile button if it's the logged-in user's profile */}
                             {profileData?.username === loggedInUsername && (
@@ -105,18 +109,62 @@ const Profile = () => {
 
                     </div>
                     <div className="flex justify-center gap-4 my-12 sm:text-md text-lg">
-                        <div onClick={() => setPage('transactions')} className={page === 'transactions' ? "settings-link border-b-2" : "settings-link opacity-50"}>
-                           All Transactions
+                        <div onClick={() => setPage('transactions')} className={page === 'transactions' ? "settings-link text-[#74f2cc] border-b-2" : "settings-link opacity-50"}>
+                            All Transactions
                         </div>
 
 
-                        <div onClick={() => setPage('blockchains')} className={page === 'blockchains' ? "settings-link border-b-2" : "settings-link opacity-50"}>
+                        <div onClick={() => setPage('blockchains')} className={page === 'blockchains' ? "settings-link text-[#74f2cc] border-b-2" : "settings-link opacity-50"}>
                             BlockChains
                         </div>
                     </div>
 
+                    <hr className="modern-hr" />
 
+                    {page === 'transactions' ?
+                        <div className="fadeIn">                    {/* balance */}
+                            <div className="flex justify-center items-center my-2 ">
+                                <div className="my-8 mx-4 sm:mx-16">
+                                    <div className="opacity-90">{profileData.username}&apos; Balance</div>
+                                    <div className="transaction-no">{profileData.received_amount - profileData.sent_amount}</div>
+                                </div>
+                                <span className="mt-2 saturate-150 text-xl"> = </span>
+                                <div className="my-8 mx-4 sm:mx-16">
+                                    <div className="opacity-90">Coins Recieved</div>
+                                    <div className="transaction-no">{profileData.received_amount}</div>
+                                </div>
+                                <span className="mt-2 saturate-150 text-xl">-</span>
+                                <div className="my-8 mx-4 sm:mx-16">
+                                    <div className="opacity-90">Coins Spent</div>
+                                    <div className="transaction-no">{profileData.sent_amount}</div>
+                                </div>
+                            </div>
+                            <hr className="modern-hr" />
+
+
+                            <TransactionBox transactions={profileData.transactions} />
+                        </div> :
+                        <div>
+                            <div className="flex justify-center items-center my-2 ">
+                                <div className="my-8 mx-4 sm:mx-16">
+                                    <div className="opacity-90 text-sm sm:text-lg text-center">Total Blocks</div>
+                                    <div className="transaction-no">{profileData.blocks_count}</div>
+                                </div>
+                                <div className="my-8 mx-4 sm:mx-16">
+                                    <div className="opacity-90 text-sm sm:text-lg text-center">Total Transactions</div>
+                                    <div className="transaction-no">{profileData.transactions_count}</div>
+                                </div>
+                                <div className="my-8 mx-4 sm:mx-16">
+                                    <div className="opacity-90 text-sm sm:text-lg text-center">Average Transactions Per Block</div>
+                                    <div className="transaction-no">{profileData.average_transaction}</div>
+                                </div>
+                            </div>
+                            <hr className="modern-hr" />
+
+                            <BlockchainView blockchainData={profileData.blocks} />
+                        </div>}
                 </div>
+
             }
         </>
     );

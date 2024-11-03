@@ -39,6 +39,9 @@ def make_transaction(sender: str, receiver: str, amount: float, private_key: str
     except:
         return "Invalid Receiver"
 
+    if not receiver_user.is_new_user_setup_completed:
+        return "Receiver Setup Incomplete"
+
     amount = float(amount)
     unique_id = Transaction.objects.count() + 1
     msg = f"{sender_user.username}->{receiver_user.username}:{amount:.2f}:{unique_id}"
