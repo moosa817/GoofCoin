@@ -5,8 +5,8 @@ import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { ModalContext } from "../components/ModalsContext";
 import { useEffect } from "react";
-import { GetTransactions } from "../components/TransactionsAuth";
-import { TransactionBox } from '../components/TransactionsComp'
+import { GetTransactions } from "../components/transaction/TransactionsAuth";
+import { TransactionBox } from '../components/transaction/TransactionsComp'
 import Loading from "../components/Loading";
 const Transaction = () => {
     const { isLogin, Username } = useContext(LoginContext);
@@ -18,7 +18,9 @@ const Transaction = () => {
             openModal();
         }
     }, [isLogin, openModal]);
-
+    if (!isLogin) {
+        return <Navigate to="/" />;
+    }
 
 
 
@@ -27,10 +29,7 @@ const Transaction = () => {
 
     }, [Username])
 
-    if (!isLogin) {
-        return <Navigate to="/" />;
-    }
-    console.log(Transactions)
+
 
     return (
         <>

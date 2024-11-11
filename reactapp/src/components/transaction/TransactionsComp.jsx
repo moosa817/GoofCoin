@@ -150,4 +150,4 @@ const SingleTransaction = ({ transaction, isLast }) => {
     );
 };
 
-export { LinkArrow, ForwardArrow, TransactionBox };
+export { SingleTransaction, LinkArrow, ForwardArrow, TransactionBox };

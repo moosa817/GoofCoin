@@ -48,7 +48,7 @@ const RefreshToken = async (refresh) => {
 //component
 // checks token , refresh's if needed saves username email etc
 const TokenVerify = () => {
-    const { isLogin, setisLogin, setisLoading, Username, setName, setEmail, setUsername, setPfp, setisGuest, setUserId, setIsGoogle, setSetupCompleted } = useContext(LoginContext);
+    const { isLogin, setisLogin, setisLoading, Username, setName, setEmail, setUsername, setPfp, setisGuest, setUserId, setIsGoogle, setSetupCompleted, setBalance, setPublicKey, setRecentTransactions } = useContext(LoginContext);
 
 
     useEffect(() => {
@@ -73,6 +73,9 @@ const TokenVerify = () => {
                             setUserId(result.id);
                             setIsGoogle(result.isGoogle);
                             setSetupCompleted(result.SetupCompleted);
+                            setBalance(result.balance);
+                            setPublicKey(result.publicKey);
+                            setRecentTransactions(result.recentTransactions);
                             return;
                         }
                     } catch (error) {
@@ -98,6 +101,10 @@ const TokenVerify = () => {
                                 setUserId(result2.id);
                                 setIsGoogle(result2.isGoogle);
                                 setSetupCompleted(result2.SetupCompleted);
+                                setBalance(result2.balance);
+                                setPublicKey(result2.publickey);
+                                setRecentTransactions(result2.recentTransactions);
+
                             }
                             return;
                         }

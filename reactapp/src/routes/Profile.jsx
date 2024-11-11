@@ -7,7 +7,7 @@ import { ModalContext } from "../components/ModalsContext";
 import { useParams, Link } from "react-router-dom";
 import { config } from "../config";
 import Loading from '../components/Loading';
-import { TransactionBox } from '../components/TransactionsComp';
+import { TransactionBox } from '../components/transaction/TransactionsComp';
 import BlockchainView from "../components/BlockChainComp"
 
 
@@ -36,6 +36,18 @@ const Profile = () => {
     const [isLoading, setisLoading] = useState(true); // Loading state
     const [profileData, setProfileData] = useState(null); // State to hold profile data
 
+    // Check login status and open modal if not logged in
+    useEffect(() => {
+        if (!isLogin) {
+            openModal();
+        }
+    }, [isLogin, openModal]);
+
+    // Redirect to home page if not logged in
+    if (!isLogin) {
+        return <Navigate to="/" />;
+    }
+
     const fetchProfile = async () => {
         setisLoading(true); // Set loading state before fetching
         try {
@@ -53,17 +65,7 @@ const Profile = () => {
         fetchProfile();
     }, [UrlUsername]);
 
-    // Check login status and open modal if not logged in
-    useEffect(() => {
-        if (!isLogin) {
-            openModal();
-        }
-    }, [isLogin, openModal]);
 
-    // Redirect to home page if not logged in
-    if (!isLogin) {
-        return <Navigate to="/" />;
-    }
 
     // Set a default profile picture if not available
     const pfp = profileData?.pfp

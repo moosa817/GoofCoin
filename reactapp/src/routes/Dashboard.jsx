@@ -1,12 +1,15 @@
 import MyNav from "../components/navbar";
 import { LoginContext } from "../components/auth/AuthContext";
 import { useContext } from "react";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { ModalContext } from "../components/ModalsContext";
 import { useEffect } from "react";
+import AccountInfo from '../components/dashboard/AccountInfo'
+import RecentTransactionsComp from "../components/dashboard/RecentTransactionsComp";
+import TransactionPanel from "../components/dashboard/TransactionPanel";
 
 const Dashboard = () => {
-    const { isLogin, Username, Email, Name, SetupCompleted } = useContext(LoginContext);
+    const { isLogin, Username, PublicKey, Balance, RecentTransactions } = useContext(LoginContext);
     const { openModal } = useContext(ModalContext);
 
 
@@ -20,13 +23,20 @@ const Dashboard = () => {
         return <Navigate to="/" />;
     }
 
-    console.log(SetupCompleted);
     return (
         <>
             <MyNav />
-            <div className="fadeIn">
-                wow my nanme is {Name} its dashboarding time<br></br>
+            <AccountInfo username={Username} balance={Balance} publicKey={PublicKey} />
+            <div className="grid md:grid-cols-3 grid-cols-1  mx-16 gap-6">
+                <div className="col-span-2">
+                    <TransactionPanel />
+                </div>
+                <div className="col-span-1">
+                    <RecentTransactionsComp username={Username} transactions={RecentTransactions} />
+                </div>
+
             </div>
-        </>)
+        </>
+    );
 }
 export default Dashboard;
