@@ -6,7 +6,7 @@ import { Navigate, Link } from "react-router-dom";
 
 import { config } from "../config";
 const Setup = () => {
-    const { isLogin, SetupCompleted, setSetupCompleted } = useContext(LoginContext);
+    const { isLogin, SetupCompleted, setSetupCompleted, setUsername } = useContext(LoginContext);
     const [isDownloaded, setIsDownloaded] = useState(false);
     const [error, setError] = useState('');
 
@@ -50,10 +50,9 @@ const Setup = () => {
             e.target.innerText = 'Downloaded';
             setIsDownloaded(true);
 
-            setTimeout(() => {
-                setSetupCompleted(true);
+            setUsername('');
+            setSetupCompleted(true);
 
-            }, 3000);
         } catch (error) {
             e.target.disabled = false;
             e.target.innerText = 'Download Private Key';

@@ -30,16 +30,14 @@ class UserSetup(APIView):
 
         private_key, public_key = generate_rsa_keypair()
 
-        user = request.user
+        sender = User.objects.get(username="system")
 
-        print(request.user.username, settings.CONFIG.SYSTEM_PRIVATE_KEY.strip())
         result = make_transaction(
-            "system",
-            request.user.username,
+            sender,
+            request.user,
             1000,
             settings.CONFIG.SYSTEM_PRIVATE_KEY.strip(),
         )
-        print(result)
 
         if result != "Transaction Successful":
             return Response(
@@ -64,7 +62,6 @@ class TransactionView(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            sender = request.user.username
             recipient = serializer.validated_data.get("recipient")
             amount = serializer.validated_data.get("amount")
             private_key_file = serializer.validated_data.get("privateKeyFile")
@@ -81,18 +78,24 @@ class TransactionView(APIView):
                     status=400,
                 )
 
-            # Process the transaction
-            response = make_transaction(sender, recipient, amount, private_key)
+            sender = request.user
 
+            if not sender.is_new_user_setup_completed:
+                return Response({"message": "User Setup Incomplete"}, status=400)
             try:
-                receiver_user = User.objects.get(
-                    Q(username=recipient)
-                    | Q(public_key=recipient.strip().replace("\r\n", "\n"))
+                receiver = User.objects.get(
+                    Q(username=receiver) | Q(public_key=receiver)
                 )
             except User.DoesNotExist:
-                receiver_user = None
+                return Response({"message": "Invalid Receiver"}, status=400)
 
-            if response == "Transaction Successful" and receiver_user:
+            if not receiver.is_new_user_setup_completed:
+                return Response({"message": "Receiver Setup Incomplete"}, status=400)
+
+            # Process the transaction, sending as objects
+            response = make_transaction(sender, recipient, amount, private_key)
+
+            if response == "Transaction Successful":
                 return Response(
                     {
                         "message": response,
@@ -153,6 +156,10 @@ class VerifyToken(APIView):
         else:
             pfp = None
         # will use https://api.dicebear.com/9.x/pixel-art/svg?seed=NAME&hair=short01&size=300&width=100&height=100
+        transactions = Transaction.objects.filter(
+            Q(sender=request.user) | Q(recipient=request.user)
+        ).order_by("-timestamp")[:5]
+        recent_transactions = TransactionGetSerializer(transactions, many=True).data
 
         return Response(
             {
@@ -167,6 +174,7 @@ class VerifyToken(APIView):
                 "pfp": pfp,
                 "isGoogle": request.user.google,
                 "SetupCompleted": request.user.is_new_user_setup_completed,
+                "recentTransactions": recent_transactions,
             }
         )
 

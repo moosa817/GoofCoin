@@ -48,9 +48,9 @@ const RefreshToken = async (refresh) => {
 //component
 // checks token , refresh's if needed saves username email etc
 const TokenVerify = () => {
-    const { isLogin, setisLogin, setisLoading, Username, setName, setEmail, setUsername, setPfp, setisGuest, setUserId, setIsGoogle, setSetupCompleted, setBalance, setPublicKey, setRecentTransactions } = useContext(LoginContext);
+    const { isLogin, setisLogin, setisLoading, Username, setName, setEmail, setUsername, setPfp, setisGuest, setUserId, setIsGoogle, setSetupCompleted, setBalance, setPublicKey, setRecentTransactions, SetupCompleted } = useContext(LoginContext);
 
-
+    // all this only runs when Username is empty
     useEffect(() => {
         if (Username != '') {
             //do nothing
@@ -62,6 +62,7 @@ const TokenVerify = () => {
                 if (token) {
                     try {
                         const result = await AccessToken(token);
+                        console.log(result);
                         if (result.valid) {
                             setisLogin(true);
                             setisLoading(false);
@@ -74,7 +75,7 @@ const TokenVerify = () => {
                             setIsGoogle(result.isGoogle);
                             setSetupCompleted(result.SetupCompleted);
                             setBalance(result.balance);
-                            setPublicKey(result.publicKey);
+                            setPublicKey(result.publickey);
                             setRecentTransactions(result.recentTransactions);
                             return;
                         }
@@ -120,7 +121,7 @@ const TokenVerify = () => {
 
             checkToken();
         }
-    }, [isLogin]);
+    }, [isLogin, SetupCompleted]);
 
 
     return null;

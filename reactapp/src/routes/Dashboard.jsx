@@ -22,7 +22,7 @@ const Dashboard = () => {
     if (!isLogin) {
         return <Navigate to="/" />;
     }
-
+    console.log(PublicKey)
     return (
         <>
             <MyNav />
