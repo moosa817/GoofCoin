@@ -1,4 +1,4 @@
-import {config} from '../../config';
+import { config } from '../../config';
 
 export const handleUpload = async (file) => {
 
@@ -15,8 +15,7 @@ export const handleUpload = async (file) => {
         });
 
         if (response.ok) {
-            const result = await response.json();
-            console.log(result);
+            await response.json();
             return true;
         } else {
             console.error('Error uploading file:', response.statusText);

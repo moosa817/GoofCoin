@@ -84,7 +84,7 @@ class TransactionView(APIView):
                 return Response({"message": "User Setup Incomplete"}, status=400)
             try:
                 receiver = User.objects.get(
-                    Q(username=receiver) | Q(public_key=receiver)
+                    Q(username=recipient) | Q(public_key=recipient)
                 )
             except User.DoesNotExist:
                 return Response({"message": "Invalid Receiver"}, status=400)
@@ -93,13 +93,20 @@ class TransactionView(APIView):
                 return Response({"message": "Receiver Setup Incomplete"}, status=400)
 
             # Process the transaction, sending as objects
-            response = make_transaction(sender, recipient, amount, private_key)
+            response = make_transaction(sender, receiver, amount, private_key)
+
+            transactions = Transaction.objects.filter(
+                Q(sender=request.user) | Q(recipient=request.user)
+            ).order_by("-timestamp")[:5]
+            recent_transactions = TransactionGetSerializer(transactions, many=True).data
 
             if response == "Transaction Successful":
                 return Response(
                     {
                         "message": response,
                         "error": False,
+                        "balance": get_balance(sender),
+                        "recentTransactions": recent_transactions,
                     }
                 )
             else:

@@ -45,7 +45,6 @@ export default function ChangePassword() {
             setSuccessMsg("Password changed successfully")
         }
         else {
-            console.log(result)
             setErrorMsg(result.message)
 
 

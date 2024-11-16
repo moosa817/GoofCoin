@@ -9,18 +9,19 @@ export const MakeTransaction = async (amount, recipient, file) => {
 
     try {
         const response = await fetch(
-            `${config.API_URL}/api/make/`, {
+            `${config.API_URL}/api/make-transaction/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
-            body: { formData }
+            body: formData
         }
-
         );
-        console.log(response.data);
+        return await response.json();
+
     } catch (error) {
         console.error(error);
+        return { "error": true, "message": error.message };
     }
+
 }

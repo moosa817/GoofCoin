@@ -62,7 +62,6 @@ const TokenVerify = () => {
                 if (token) {
                     try {
                         const result = await AccessToken(token);
-                        console.log(result);
                         if (result.valid) {
                             setisLogin(true);
                             setisLoading(false);
