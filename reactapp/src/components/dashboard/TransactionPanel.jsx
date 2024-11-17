@@ -141,7 +141,13 @@ function TransactionPanel() {
                 resetForm();
 
             } else {
+                event.target.disabled = false;
+                event.target.innerHTML = `Send`;
                 setErrorMsg(result.message);
+                if (result.errors) {
+                    setErrors(result.errors);
+                }
+
                 setErrorKey((prevKey) => prevKey + 1);
             }
         };
@@ -227,7 +233,7 @@ function TransactionPanel() {
                 {/* Send Button */}
                 <button
                     onClick={handleSubmit}
-                    className="w-full py-3 my-4 bg-primary text-background rounded-lg flex items-center justify-center font-semibold text-lg transition duration-300 hover:bg-accent hover:shadow-xl hover:scale-[1.02] hover:text-white"
+                    className="w-full py-3 my-4 bg-primary text-background rounded-lg flex items-center justify-center font-semibold sm:text-lg transition duration-300 hover:bg-accent hover:shadow-xl hover:scale-[1.02] hover:text-white"
                 >
                     Send
                     <HiOutlineArrowRight className="ml-2 text-xl" />

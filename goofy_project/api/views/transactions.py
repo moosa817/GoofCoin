@@ -49,7 +49,7 @@ def make_transaction(sender: object, receiver: object, amount: int, private_key:
         return "Insufficient Balance"
 
     if not verify_signature(msg.encode(), signature, sender.public_key.strip()):
-        return "Invalid Signature"
+        return "Invalid Signature / Invalid Private Key"
 
     transaction = Transaction.objects.create(
         sender=sender, recipient=receiver, amount=amount, signature=signature

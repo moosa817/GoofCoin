@@ -56,7 +56,6 @@ const LinkArrow = () => (
 const BlockchainView = ({ blockchainData }) => {
     // Reverse the blockchain data
     const reversedBlocks = [...blockchainData].reverse();
-
     return (
         <div className="bg-[#313c87] p-8 min-h-screen text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -181,20 +180,20 @@ const SingleTransaction = ({ transaction }) => {
     return (
         <div className="transaction-box p-2 bg-[#3b4691] text-white rounded-lg shadow-lg relative">
             <span className="text-sm font-semibold text-[#50acf7]">Transaction Details</span>
-            <div className="transaction-detail mb-1 text-[10px]">
+            <div className=" mb-1 text-[10px]">
                 <span className="font-medium text-[#74f2cc] text-[10px]">Sender:</span> {transaction.sender_username}
             </div>
-            <div className="transaction-detail text-xs">
+            <div className=" text-xs">
                 <span className="font-medium text-[#74f2cc] text-xs">Receiver:</span> <span className="text-[9px] mx-1">{transaction.recipient_username}</span>
             </div>
-            <div className="transaction-detail">
+            <div className="">
                 <span className="font-medium text-[#50acf7] text-[10px]">Amount:</span> <span className="font-bold text-[#74f2cc] text-[10px]">{transaction.amount} Coins</span>
             </div>
-            <div className="transaction-detail text-xs text-gray-400">
-                <span className="font-medium text-xs">Time: </span>
+            <div className=" text-xs text-gray-400">
+                <span className="font-medium text-[10px]">Time: </span>
                 <span className="mx-1 text-[10px]">{formattedTime}</span>
             </div>
-            <div className="transaction-detail">
+            <div className="">
                 <span className="font-medium text-[#74f2cc] text-xs">Signature:</span>{' '}
                 <button onClick={toggleSignatureModal} className="text-[#50acf7] underline hover:text-[#74f2cc] text-[9px] mx-1">
                     View Signature

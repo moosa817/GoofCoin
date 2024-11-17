@@ -127,17 +127,17 @@ const Profile = () => {
                         <div className="fadeIn">                    {/* balance */}
                             <div className="flex justify-center items-center my-2 ">
                                 <div className="my-8 mx-4 sm:mx-16">
-                                    <div className="opacity-90">{profileData.username}&apos; Balance</div>
+                                    <div className="opacity-90 text-center">{profileData.username}&apos;s Balance</div>
                                     <div className="transaction-no">{profileData.received_amount - profileData.sent_amount}</div>
                                 </div>
                                 <span className="mt-2 saturate-150 text-xl"> = </span>
                                 <div className="my-8 mx-4 sm:mx-16">
-                                    <div className="opacity-90">Coins Recieved</div>
+                                    <div className="opacity-90 text-center">Coins Recieved</div>
                                     <div className="transaction-no">{profileData.received_amount}</div>
                                 </div>
                                 <span className="mt-2 saturate-150 text-xl">-</span>
                                 <div className="my-8 mx-4 sm:mx-16">
-                                    <div className="opacity-90">Coins Spent</div>
+                                    <div className="opacity-90 text-center">Coins Spent</div>
                                     <div className="transaction-no">{profileData.sent_amount}</div>
                                 </div>
                             </div>

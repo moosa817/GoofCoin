@@ -17,32 +17,32 @@ function AccountInfo({ username, balance, publicKey }) {
             <div className="text-center space-y-4">
                 <h2 className="text-2xl font-semibold text-primary">Account Info</h2>
 
-                <div className="flex justify-around items-center">
+                <div className="flex sm:justify-around items-center">
                     {/* Username and Public Key Section */}
                     <div className="flex flex-col items-start mt-4">
                         {/* Username */}
                         <div className="flex items-center mb-2">
-                            <p className="opacity-90 text-sm w-28">Username:</p>
-                            <div className="text-lg font-semibold text-accent">{username}</div>
+                            <p className="opacity-90 text-xs sm:text-sm w-20 sm:w-28">Username:</p>
+                            <div className="text-sm sm:text-lg font-semibold text-accent">{username}</div>
                         </div>
 
                         {/* Public Key */}
                         <div className="flex items-center">
-                            <p className="opacity-90 text-sm w-28">Public Key:</p>
-                            <a className="flex font-semibold text-accent cursor-pointer" onClick={() => setIsModalOpen(true)}>
+                            <p className="opacity-90 text-xs sm:text-sm w-20 sm:w-28">Public Key:</p>
+                            <a className="flex font-semibold text-accent cursor-pointer text-xs sm:text-sm mt-1" onClick={() => setIsModalOpen(true)}>
 
 
                                 VIEW PUBLIC KEY
-                                <FaEye className="ml-1 text-accent text-xl hover:text-primary" />
+                                <FaEye className="sm:ml-1 text-accent text-lg sm:text-xl hover:text-primary" />
 
                             </a>
                         </div>
                     </div>
 
                     {/* Balance Display */}
-                    <div className="flex flex-col items-center mx-4">
-                        <p className="opacity-90 text-lg">Balance</p>
-                        <div className="transaction-no text-3xl font-semibold text-accent">{balance} Coins</div>
+                    <div className="flex flex-col items-center ml-6">
+                        <p className="opacity-90 sm:text-lg">Balance</p>
+                        <div className="transaction-no lg:text-3xl md:text-xl text-lg  font-semibold text-accent">{balance} Coins</div>
                     </div>
                 </div>
             </div>
@@ -56,9 +56,11 @@ function AccountInfo({ username, balance, publicKey }) {
             {/* Modal for Full Public Key */}
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-background p-8 rounded-lg shadow-lg text-center text-white max-w-lg mx-4">
-                        <h3 className="text-xl text-primary font-semibold mb-4">Your Public Key</h3>
-                        <pre className="whitespace-pre-wrap text-sm bg-gray-800 p-4 rounded-md mb-4 overflow-auto">
+                    <div className="bg-background p-6 sm:p-8 rounded-lg shadow-lg text-center text-white w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3">
+                        <h3 className="text-lg sm:text-xl text-primary font-semibold mb-4">
+                            Your Public Key
+                        </h3>
+                        <pre className="whitespace-pre-wrap text-xs sm:text-sm bg-gray-800 p-3 sm:p-4 rounded-md mb-4 overflow-auto max-h-60 sm:max-h-72">
                             {publicKey}
                         </pre>
                         <button

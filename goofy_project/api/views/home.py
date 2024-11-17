@@ -74,6 +74,7 @@ class TransactionView(APIView):
                     {
                         "message": f"Failed to read private key file: {str(e)}",
                         "error": True,
+                        "errors": ["file"],
                     },
                     status=400,
                 )
@@ -87,10 +88,15 @@ class TransactionView(APIView):
                     Q(username=recipient) | Q(public_key=recipient)
                 )
             except User.DoesNotExist:
-                return Response({"message": "Invalid Receiver"}, status=400)
+                return Response(
+                    {"message": "Invalid Receiver", "errors": ["text"]}, status=400
+                )
 
             if not receiver.is_new_user_setup_completed:
-                return Response({"message": "Receiver Setup Incomplete"}, status=400)
+                return Response(
+                    {"message": "Receiver Setup Incomplete", "errors": ["text"]},
+                    status=400,
+                )
 
             # Process the transaction, sending as objects
             response = make_transaction(sender, receiver, amount, private_key)
@@ -136,6 +142,7 @@ class ViewBlockchain(APIView):
             blocks = Block.objects.filter(
                 Q(transactions__sender=user) | Q(transactions__recipient=user)
             )
+            blocks = blocks.distinct()
             transactions_count = Transaction.objects.filter(
                 Q(sender=user) | Q(recipient=user)
             ).count()
@@ -226,6 +233,7 @@ class GetProfile(APIView):
         blocks = Block.objects.filter(
             Q(transactions__sender=user) | Q(transactions__recipient=user)
         )
+        blocks = blocks.distinct()
 
         transactions_count = Transaction.objects.filter(
             Q(sender=user) | Q(recipient=user)

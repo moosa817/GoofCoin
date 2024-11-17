@@ -62,7 +62,7 @@ const TransactionBox = ({ transactions }) => {
     );
 };
 
-const SingleTransaction = ({ transaction, isLast }) => {
+const SingleTransaction = ({ transaction, isLast, showIcon = true }) => {
     const [isPublicKeyModalOpen, setIsPublicKeyModalOpen] = useState(false);
     const [isSignatureModalOpen, setIsSignatureModalOpen] = useState(false);
 
@@ -105,8 +105,8 @@ const SingleTransaction = ({ transaction, isLast }) => {
                 Show Public Keys
             </button>
 
-            {!isLast && <ForwardArrow />}
-            <LinkArrow />
+            {!isLast && showIcon && <ForwardArrow />}
+            {!isLast && showIcon && <LinkArrow />}
 
             {/* Public Keys Modal */}
             {isPublicKeyModalOpen && (

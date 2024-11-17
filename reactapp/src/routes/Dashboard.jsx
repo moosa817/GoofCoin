@@ -26,7 +26,7 @@ const Dashboard = () => {
         <>
             <MyNav />
             <AccountInfo username={Username} balance={Balance} publicKey={PublicKey} />
-            <div className="grid md:grid-cols-3 grid-cols-1  mx-16 gap-6">
+            <div className="grid md:grid-cols-3 grid-cols-1 mx-4 sm:mx-16 gap-6">
                 <div className="col-span-2">
                     <TransactionPanel />
                 </div>

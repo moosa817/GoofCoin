@@ -19,7 +19,7 @@ const RecentTransactions = ({ transactions, username }) => {
     };
 
     return (
-        <div className="recent-transactions-box bg-[#3b4691] text-white rounded-lg shadow-lg p-5 max-w-[400px] mx-auto">
+        <div className="recent-transactions-box bg-[#3b4691] text-white rounded-lg shadow-lg p-5 max-w-[450px] ml-4">
             <h3 className="font-semibold text-xl border-b-2 border-[#50acf7] pb-3">Recent Transactions</h3>
 
             {transactions.map((transaction) => {
@@ -66,8 +66,8 @@ const RecentTransactions = ({ transactions, username }) => {
 
             {isModalOpen && (
                 <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="modal-content bg-[#3b4691] text-white p-8 rounded-xl shadow-lg max-w-lg w-full relative">
-                        <SingleTransaction transaction={selectedTransaction} isLast={true} />
+                    <div className="modal-content bg-[#3b4691] text-white p-8 rounded-xl shadow-lg max-w-lg w-[90%] relative">
+                        <SingleTransaction transaction={selectedTransaction} isLast={true} showIcon={false} />
                         <button
                             className="modal-close absolute top-5 right-5 text-white bg-red-600 hover:bg-red-700 rounded-full px-3 py-.5 text-2xl focus:outline-none"
                             onClick={closeModal}
