@@ -67,6 +67,13 @@ class Transaction(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     signature = models.TextField()  # Store signature of the transaction
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["sender"]),
+            models.Index(fields=["recipient"]),
+            models.Index(fields=["timestamp"]),
+        ]
+
     def __str__(self):
         return f"{self.sender.username}->{self.recipient.username}:{self.amount}"
 
