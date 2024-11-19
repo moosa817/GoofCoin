@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 import os
 
+
 class Settings(BaseSettings):
     API_TITLE: str = "GOOFCOIN API"
     API_DESCRIPTION: str = (
@@ -19,6 +20,8 @@ class Settings(BaseSettings):
     CLOUDFRONT_DOMAIN: str
 
     SYSTEM_PRIVATE_KEY: str
+    SENDGRID_API_KEY: str
+    FROM_EMAIL: str = "muhammadmoosa.7782@gmail.com"
     SYSTEM_PUBLIC_KEY: str = """-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz1r5Mzx949cbhHFJQX4L
 fGBmgbEny1MiVaYen+o3qmebdwwERt5VyAVgeqxk37+yvDA1XEiAC1D6EMwsoGQ/

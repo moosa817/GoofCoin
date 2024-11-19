@@ -7,6 +7,8 @@ from django.utils import timezone
 import requests
 from io import BytesIO
 from django.core.files.base import ContentFile
+from django.utils.timezone import now, timedelta
+import random
 
 # Create your models here.
 # Changing User class model
@@ -23,6 +25,22 @@ class User(AbstractUser):
     public_key = models.TextField()
     is_new_user_setup_completed = models.BooleanField(default=False)
     pfp = models.ImageField(upload_to="profile_pictures/", blank=True, null=True)
+
+    password_reset_code = models.CharField(max_length=6, blank=True, null=True)
+    code_generated_at = models.DateTimeField(blank=True, null=True)
+
+    def generate_reset_code(self):
+
+        self.password_reset_code = f"{random.randint(100000, 999999)}"
+        self.code_generated_at = now()
+        self.save()
+
+    def is_reset_code_valid(self):
+        if self.code_generated_at:
+            return now() - self.code_generated_at < timedelta(
+                minutes=10
+            )  # Example: 10 minutes
+        return False
 
     def save_image_from_url(self, url):
         # Send a request to fetch the image from the URL

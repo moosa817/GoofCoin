@@ -5,7 +5,7 @@ import { Authenticate, GuestAuth } from './AuthApi';
 import { LoginContext } from './AuthContext';
 import Register from './RegisterApi.js';
 import GoogleSignIn from './GoogleSign';
-
+import { Link } from 'react-router-dom'
 
 const LoadingSvg = (text) => {
     return (`<div role="status" class="flex items-center justify-center">
@@ -185,9 +185,9 @@ const AuthForm = ({ isLoginPage, setLoginPage }) => {
             </div>
             <div className='text-sm text-red-600 mb-2 font-semibold' ref={LoginError}>
             </div>
-
+            <Link to="reset" className="text-sm text-blue-400">Forgot Password?</Link>
             <button onClick={handleLogin}
-                className={`py-3 px-2 w-full duration-500 rounded-sm font-semibold ${isLoginFormValid ? 'bg-primary hover:scale-105' : 'bg-gray-400 cursor-not-allowed'}`}
+                className={`mt-1 py-3 px-2 w-full duration-500 rounded-sm font-semibold ${isLoginFormValid ? 'bg-primary hover:scale-105' : 'bg-gray-400 cursor-not-allowed'}`}
                 disabled={!isLoginFormValid}>
                 Login
             </button>

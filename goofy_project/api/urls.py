@@ -27,4 +27,5 @@ urlpatterns = [
     path("upload_pfp/", home.Pfp.as_view()),
     path("get_profile/<str:username>", home.GetProfile.as_view()),
     path("get_transactions/<str:username>", home.GetTransactions.as_view()),
+    path("reset-password/", register_login.ResetForm.as_view()),
 ]

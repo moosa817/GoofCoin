@@ -7,6 +7,7 @@ import Logout from './routes/Logout.jsx'
 import Profile from './routes/Profile.jsx'
 import Settings from './routes/Settings.jsx'
 import Setup from './routes/SetupComplete.jsx'
+import Reset from './routes/ResetPwd.jsx'
 import './assets/css/style.css'
 import { ModalProvider } from './components/ModalsContext.jsx'
 import { LoginProvider } from './components/auth/AuthContext.jsx'
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: "/setup",
     element: <Setup />
+  },
+  {
+    path: "/reset",
+    element: <Reset />
   }
 ]);
 

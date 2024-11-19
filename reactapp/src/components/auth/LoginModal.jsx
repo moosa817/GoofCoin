@@ -58,13 +58,13 @@ export default function LoginModal() {
                         <div className="flex shadow-xl my-2">
                             <div
                                 onClick={() => setLoginPage(true)}
-                                className={`w-1/2 text-center border hover:scale-105 hover:cursor-pointer p-3 hover:font-semibold hover:bg-primary duration-500 ${isLoginPage ? 'active-login' : ''}`}
+                                className={`w-1/2 text-center border hover:scale-105 hover:cursor-pointer p-3 hover:font-semibold hover:bg-primary duration-500 ${isLoginPage ? 'bg-primary' : ''}`}
                             >
                                 Login
                             </div>
                             <div
                                 onClick={() => setLoginPage(false)}
-                                className={`w-1/2 text-center border hover:scale-105 hover:cursor-pointer p-3 hover:font-semibold hover:bg-primary duration-500 ${!isLoginPage ? 'active-login' : ''}`}
+                                className={`w-1/2 text-center border hover:scale-105 hover:cursor-pointer p-3 hover:font-semibold hover:bg-primary duration-500 ${!isLoginPage ? 'bg-primary' : ''}`}
                             >
                                 Signup
                             </div>
