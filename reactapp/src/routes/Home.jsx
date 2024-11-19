@@ -14,11 +14,11 @@ const Home = () => {
         return <Navigate to="/dashboard" />
     }
     return (
-        <>
+        <div className="overflow-hidden">
             <MyNav />
             <Header />
             <LoginModal />
             <GoogleSignIn showButton={false} />
-        </>)
+        </div>)
 }
 export default Home

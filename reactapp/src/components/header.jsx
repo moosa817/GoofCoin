@@ -5,7 +5,7 @@ const Header = () => {
 
     const { openModal } = useContext(ModalContext);
     return (
-        <header className=" bg-background h-[100vh]">
+        <header className=" bg-background h-full">
 
             <div className="absolute z-10">
                 <div className=" my-24 text-center mx-auto w-11/12 md:w-3/4">
