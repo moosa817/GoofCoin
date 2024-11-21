@@ -4,7 +4,7 @@ from goofy_app.models import Block, Transaction
 
 
 class Blockchain:
-    difficulty = 2
+    difficulty = 1
     block_size = 2  # Max number of transactions per block
 
     def __init__(self):

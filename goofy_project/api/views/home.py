@@ -17,6 +17,9 @@ from api.serializers import (
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework import generics
 from decimal import Decimal
+from django.db.models import Count
+from rest_framework.pagination import PageNumberPagination
+import time
 
 
 class UserSetup(APIView):
@@ -60,6 +63,7 @@ class TransactionView(APIView):
     parser_classes = [MultiPartParser, JSONParser]
 
     def post(self, request):
+        t = time.time()
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             recipient = serializer.validated_data.get("recipient")
@@ -106,6 +110,7 @@ class TransactionView(APIView):
             ).order_by("-timestamp")[:5]
             recent_transactions = TransactionGetSerializer(transactions, many=True).data
 
+            print("Time taken: ", time.time() - t)
             if response == "Transaction Successful":
                 return Response(
                     {
@@ -121,50 +126,91 @@ class TransactionView(APIView):
             return Response(serializer.errors, status=400)
 
 
+from rest_framework.pagination import PageNumberPagination
+from django.db.models import Q, Count
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+
+class BlockPagination(PageNumberPagination):
+    page_size = 6  # Adjust the page size based on your needs.
+
+    def get_paginated_response(self, data):
+        return Response(
+            {
+                "next": self.get_next_link(),
+                "previous": self.get_previous_link(),
+                "results": data,
+            }
+        )
+
+
 class ViewBlockchain(APIView):
     serializer_class = BlockChainSerializer
 
-    def get(
-        self,
-        request,
-        username,
-    ):
+    def get(self, request, username):
+        t = time.time()
         if username == "all":
-            blocks = Block.objects.all()
+            blocks = Block.objects.prefetch_related("transactions").order_by(
+                "-timestamp"
+            )
             transactions_count = Transaction.objects.count()
         else:
             try:
                 user = User.objects.get(username=username)
-
             except User.DoesNotExist:
                 return Response({"message": "User not found."}, status=404)
 
-            blocks = Block.objects.filter(
-                Q(transactions__sender=user) | Q(transactions__recipient=user)
+            # Filter blocks related to the user's transactions
+            blocks = (
+                Block.objects.filter(
+                    Q(transactions__sender=user) | Q(transactions__recipient=user)
+                )
+                .distinct()
+                .prefetch_related("transactions")
+                .order_by("-timestamp")
             )
-            blocks = blocks.distinct()
+
             transactions_count = Transaction.objects.filter(
                 Q(sender=user) | Q(recipient=user)
             ).count()
 
-        serializer = self.serializer_class(blocks, many=True)
-        blocks_count = blocks.count()
+        # Aggregate block count directly in the database
+        blocks_count = blocks.aggregate(total=Count("id"))["total"]
 
-        return Response(
-            {
-                "blocks": serializer.data,
-                "blocks_count": blocks_count,
-                "transactions_count": transactions_count,
-                "average_transaction": 2,
-            }
+        # Apply pagination
+        pagination = BlockPagination()
+        paginated_blocks = pagination.paginate_queryset(blocks, request)
+
+        # Serialize paginated data
+        serializer = self.serializer_class(paginated_blocks, many=True)
+
+        # Check if this is the first request
+        is_first_request = (
+            not request.query_params.get(pagination.page_query_param, "1").isdigit()
+            or int(request.query_params.get(pagination.page_query_param, "1")) == 1
         )
+
+        response_data = {"blocks": serializer.data}
+
+        print("Time taken: ", time.time() - t)
+        if is_first_request:
+            response_data.update(
+                {
+                    "blocks_count": blocks_count,
+                    "transactions_count": transactions_count,
+                    "average_transaction": 2,
+                }
+            )
+
+        return pagination.get_paginated_response(response_data)
 
 
 class VerifyToken(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-
+        t = time.time()
         if request.user.pfp:
             pfp = request.user.pfp.url
         else:
@@ -174,7 +220,7 @@ class VerifyToken(APIView):
             Q(sender=request.user) | Q(recipient=request.user)
         ).order_by("-timestamp")[:5]
         recent_transactions = TransactionGetSerializer(transactions, many=True).data
-
+        print("Time taken: ", time.time() - t)
         return Response(
             {
                 "valid": True,
@@ -232,8 +278,7 @@ class GetProfile(APIView):
 
         blocks = Block.objects.filter(
             Q(transactions__sender=user) | Q(transactions__recipient=user)
-        )
-        blocks = blocks.distinct()
+        ).distinct()
 
         transactions_count = Transaction.objects.filter(
             Q(sender=user) | Q(recipient=user)
@@ -265,6 +310,7 @@ class GetProfile(APIView):
 class GetTransactions(APIView):
 
     def get(self, request, username):
+        t = time.time()
         user = User.objects.get(username=username)
         try:
             transactions = Transaction.objects.filter(
@@ -282,7 +328,7 @@ class GetTransactions(APIView):
         received_amount = Transaction.objects.filter(recipient=user).aggregate(
             total=Sum("amount")
         )["total"] or Decimal("0.00")
-
+        print("Time Taken ", time.time() - t)
         return Response(
             {
                 "transactions": transaction_serialized,
