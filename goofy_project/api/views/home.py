@@ -63,7 +63,6 @@ class TransactionView(APIView):
     parser_classes = [MultiPartParser, JSONParser]
 
     def post(self, request):
-        t = time.time()
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             recipient = serializer.validated_data.get("recipient")
@@ -110,7 +109,6 @@ class TransactionView(APIView):
             ).order_by("-timestamp")[:5]
             recent_transactions = TransactionGetSerializer(transactions, many=True).data
 
-            print("Time taken: ", time.time() - t)
             if response == "Transaction Successful":
                 return Response(
                     {
@@ -149,7 +147,6 @@ class ViewBlockchain(APIView):
     serializer_class = BlockChainSerializer
 
     def get(self, request, username):
-        t = time.time()
         if username == "all":
             blocks = Block.objects.prefetch_related("transactions").order_by(
                 "-timestamp"
@@ -193,7 +190,6 @@ class ViewBlockchain(APIView):
 
         response_data = {"blocks": serializer.data}
 
-        print("Time taken: ", time.time() - t)
         if is_first_request:
             response_data.update(
                 {
@@ -210,7 +206,6 @@ class VerifyToken(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        t = time.time()
         if request.user.pfp:
             pfp = request.user.pfp.url
         else:
@@ -220,7 +215,6 @@ class VerifyToken(APIView):
             Q(sender=request.user) | Q(recipient=request.user)
         ).order_by("-timestamp")[:5]
         recent_transactions = TransactionGetSerializer(transactions, many=True).data
-        print("Time taken: ", time.time() - t)
         return Response(
             {
                 "valid": True,
@@ -276,9 +270,13 @@ class GetProfile(APIView):
             total=Sum("amount")
         )["total"] or Decimal("0.00")
 
-        blocks = Block.objects.filter(
-            Q(transactions__sender=user) | Q(transactions__recipient=user)
-        ).distinct()
+        blocks = (
+            Block.objects.filter(
+                Q(transactions__sender=user) | Q(transactions__recipient=user)
+            )
+            .distinct()
+            .order_by("timestamp")
+        )
 
         transactions_count = Transaction.objects.filter(
             Q(sender=user) | Q(recipient=user)
@@ -310,7 +308,6 @@ class GetProfile(APIView):
 class GetTransactions(APIView):
 
     def get(self, request, username):
-        t = time.time()
         user = User.objects.get(username=username)
         try:
             transactions = Transaction.objects.filter(
@@ -328,7 +325,6 @@ class GetTransactions(APIView):
         received_amount = Transaction.objects.filter(recipient=user).aggregate(
             total=Sum("amount")
         )["total"] or Decimal("0.00")
-        print("Time Taken ", time.time() - t)
         return Response(
             {
                 "transactions": transaction_serialized,

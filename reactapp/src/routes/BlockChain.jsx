@@ -39,14 +39,12 @@ const BlockChain = () => {
             .then((data) => {
                 setLoadingBlocks(false);
 
-                console.log(data);
 
                 // Filter out duplicate blocks
                 setBlockchainData((prev) => {
                     const existingBlockIds = new Set(prev.blocks.map((block) => block.id)); // Assuming 'id' is the unique identifier
 
                     const uniqueBlocks = data.results.blocks.filter((block) => !existingBlockIds.has(block.id)).reverse();
-                    console.log(prev.blocks)
                     return {
                         blocks: [...uniqueBlocks, ...prev.blocks],
                         blocks_count: data.results.blocks_count ?? prev.blocks_count,
