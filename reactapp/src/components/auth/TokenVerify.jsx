@@ -77,6 +77,10 @@ const TokenVerify = () => {
                             setPublicKey(result.publickey);
                             setRecentTransactions(result.recentTransactions);
                             return;
+                        } else {
+                            setisLogin(false);
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('refresh');
                         }
                     } catch (error) {
                         console.error('Error verifying token, Trying refresh:', error);
@@ -105,6 +109,10 @@ const TokenVerify = () => {
                                 setPublicKey(result2.publickey);
                                 setRecentTransactions(result2.recentTransactions);
 
+                            } else {
+                                setisLogin(false);
+                                localStorage.removeItem('token');
+                                localStorage.removeItem('refresh');
                             }
                             return;
                         }

@@ -41,7 +41,6 @@ class UserSetup(APIView):
             1000,
             settings.CONFIG.SYSTEM_PRIVATE_KEY.strip(),
         )
-
         if result != "Transaction Successful":
             return Response(
                 {"message": "Failed to credit initial balance."}, status=400

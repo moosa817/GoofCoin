@@ -30,9 +30,8 @@ def has_sufficient_balance(amount, user):
 def make_transaction(sender: object, receiver: object, amount: int, private_key: str):
     private_key = private_key.strip().replace("\\n", "\n")
 
-    amount = float(amount)
     unique_id = Transaction.objects.count() + 1
-    msg = f"{sender.username}->{receiver.username}:{amount:.2f}:{unique_id}"
+    msg = f"{sender.username}->{receiver.username}:{amount}:{unique_id}"
 
     if sender == receiver:
         return "Cannot Send to Yourself"
@@ -42,12 +41,11 @@ def make_transaction(sender: object, receiver: object, amount: int, private_key:
 
     try:
         signature = sign_data(msg.encode(), private_key)
-    except ValueError:
+    except ValueError as e:
         return "INVALID PRIVATE KEY FILE"
 
     if not has_sufficient_balance(amount, sender):
         return "Insufficient Balance"
-
     if not verify_signature(msg.encode(), signature, sender.public_key.strip()):
         return "Invalid Signature / Invalid Private Key"
 
