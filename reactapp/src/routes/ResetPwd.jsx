@@ -1,7 +1,7 @@
 import MyNav from "../components/navbar";
 import { LoginContext } from "../components/auth/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { config } from "../config"; // Importing the API URL configuration
 import { DangerAlert, SuccessAlert } from "../components/alerts";
 import LoginModal from "../components/auth/LoginModal"
@@ -13,7 +13,7 @@ const Reset = () => {
     const { isLogin } = useContext(LoginContext);
     const { openModal, closeModal } = useContext(ModalContext);
 
-
+    const navigate = useNavigate();
     const [step, setStep] = useState(1); // Step management
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
@@ -32,6 +32,7 @@ const Reset = () => {
         if (isLogin) {
             return <Navigate to="/dashboard" />;
         }
+
         closeModal();
     }, [isLogin]);
 
@@ -108,6 +109,8 @@ const Reset = () => {
         }
     };
 
+
+
     const handleResetPassword = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -131,13 +134,20 @@ const Reset = () => {
             const data = await response.json();
 
             if (response.status === 200) {
-                setSuccess("Password reset successful!");
+                setStep(1);
+                setEmail("");
+                setCode("");
+                setNewPassword("");
+                setConfirmPassword("");
+                setError(null);
+                setBluredEmail("");
+                setCanResendCode(false);
+                setResendTimer(60);
+                alert("Password reset successful!");
+                setSuccess("Password reset successful. You can now login with your new password.");
                 openModal();
-                setStep(1); // Reset to the initial step
-                setEmail(""); // Clear the email field
-                setCode(""); // Clear the code field
-                setNewPassword(""); // Clear the new password field
-                setConfirmPassword(""); // Clear the confirm password field
+                navigate("/")
+
             } else {
                 setError(data.error || "Failed to reset password.");
                 setN((prev) => prev + 1); // Increment the key to re-render the alert
