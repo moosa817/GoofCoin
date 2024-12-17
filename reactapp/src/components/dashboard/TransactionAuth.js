@@ -21,7 +21,7 @@ export const MakeTransaction = async (amount, recipient, file) => {
 
     } catch (error) {
         console.error(error);
-        return { "error": true, "message": error.message };
+        return { "error": true, "message": "Something Went Wrong Please Try Again" };
     }
 
 }
