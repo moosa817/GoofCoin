@@ -56,6 +56,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "goofy_project.settings.set_custom_headers",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -186,6 +187,33 @@ CORS_ALLOWED_ORIGINS = [
     "https://goofcoin.vercel.app",
     "http://192.168.18.123:8000",
 ]
+
+CORS_ALLOW_HEADERS = [
+    "Cross-Origin-Opener-Policy",
+    "Cross-Origin-Embedder-Policy",
+    # Other headers...
+]
+
+CORS_EXPOSE_HEADERS = [
+    "Cross-Origin-Opener-Policy",
+    "Cross-Origin-Embedder-Policy",
+]
+
+CUSTOM_SECURITY_HEADERS = {
+    "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
+    "Cross-Origin-Embedder-Policy": "unsafe-none",
+}
+
+
+def set_custom_headers(get_response):
+    def middleware(request):
+        response = get_response(request)
+        for header, value in CUSTOM_SECURITY_HEADERS.items():
+            response[header] = value
+        return response
+
+    return middleware
+
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
