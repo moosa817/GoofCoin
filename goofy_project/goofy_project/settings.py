@@ -192,9 +192,11 @@ CORS_ALLOW_HEADERS = [
     "Content-Type",
     "Cross-Origin-Opener-Policy",
     "Cross-Origin-Embedder-Policy",
+    "Authorization",
     # Add other headers if needed
 ]
 
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_EXPOSE_HEADERS = [
     "Cross-Origin-Opener-Policy",
