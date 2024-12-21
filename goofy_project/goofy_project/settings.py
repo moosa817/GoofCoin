@@ -189,10 +189,12 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_HEADERS = [
+    "Content-Type",
     "Cross-Origin-Opener-Policy",
     "Cross-Origin-Embedder-Policy",
-    # Other headers...
+    # Add other headers if needed
 ]
+
 
 CORS_EXPOSE_HEADERS = [
     "Cross-Origin-Opener-Policy",
